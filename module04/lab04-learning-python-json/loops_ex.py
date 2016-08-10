@@ -10,11 +10,11 @@ print()
 for hungry in donut["flavors"]["flavor"]:
 	print(hungry["id"] + "  " + hungry["type"])
 print()
-	
 
-cars={"sports":{"porsche":"Volkswagon","Viper":"Dodge","Corvette":"Chevy"}}
+
+cars={"sports":{"Porsche":"Volkswagon","Viper":"Dodge","Corvette":"Chevy"}}
 #Parse JSON without loops
-print("porsche  " + cars["sports"]["porsche"])
+print("Porsche  " + cars["sports"]["Porsche"])
 print("Viper  " + cars["sports"]["Viper"])
 print("Corvette  " + cars["sports"]["Corvette"])
 print()
