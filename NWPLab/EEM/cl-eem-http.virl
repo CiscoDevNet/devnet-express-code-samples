@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.9" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.9/virl.xsd">
+    <extensions>
+        <entry key="AutoNetkit.enable_cdp" type="Boolean">true</entry>
+    </extensions>
+    <node name="RtrA" type="SIMPLE" subtype="IOSv" location="215,134" vmImage="IOSv [4e9cda1b-0bc3-4967-8fae-bcd46d7aa8a0]" vmFlavor="IOSv [09f5261b-bd28-4332-b12c-558ac0e55588]" ipv4="192.168.0.2">
+        <extensions>
+            <entry key="AutoNetkit.ibgp_role" type="String">RR</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="config" type="String">! IOS Config generated on 2015-09-21 17:40
+! by autonetkit_0.18.1
+!
+hostname RtrA
+boot-start-marker
+boot-end-marker
+!
+vrf definition Mgmt-intf
+!
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+!
+no aaa new-model
+!
+!
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service config
+enable password cisco
+ip classless
+ip subnet-zero
+no ip domain lookup
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login
+line con 0
+ password cisco
+!
+cdp run
+!
+!
+interface Loopback0
+  description Loopback
+  ip address 192.168.0.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+  description OOB Management
+  vrf forwarding Mgmt-intf
+  ! Configured on launch
+  no ip address
+  cdp enable
+  duplex full
+  speed auto
+  no shutdown
+!
+interface GigabitEthernet0/1
+  description to web-server
+  ip address 10.0.0.5 255.255.255.252
+  cdp enable
+  ip ospf cost 1
+  duplex full
+  speed auto
+  no shutdown
+!
+!
+!
+router ospf 1
+  network 192.168.0.2 0.0.0.0 area 0
+  log-adjacency-changes
+  passive-interface Loopback0
+  network 10.0.0.4 0.0.0.3 area 0
+!
+!
+event manager directory user policy flash:
+end
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.5" netPrefixLenV4="30"/>
+        <interface id="1" name="GigabitEthernet0/2"/>
+    </node>
+    <node name="web-server" type="SIMPLE" subtype="server" location="368,191" vmImage="server [6360267b-0953-4a49-bedb-21eec506aabf]" vmFlavor="server [3773af80-cfc9-4b7b-9871-b7c40ceab7fd]">
+        <extensions>
+            <entry key="config" type="String">#cloud-config
+bootcmd:
+- ln -s -t /etc/rc.d /etc/rc.local
+hostname: web-server
+manage_etc_hosts: true
+runcmd:
+- start ttyS0
+- sed -i '/^\s*PasswordAuthentication\s\+no/d' /etc/ssh/sshd_config
+- echo &quot;UseDNS no&quot; &gt;&gt; /etc/ssh/sshd_config
+- service ssh restart
+- service sshd restart
+- route delete default gw 10.255.0.1
+- route add default gw 198.18.1.1
+- apt-get update
+- apt-get install -y php5
+- apt-get install -y tftpd
+- rm -f /var/www/html/index.html
+- mkdir -p /tftpboot
+- chmod 1777 /tftpboot
+users:
+- default
+- gecos: User configured by VIRL Configuration Engine 0.18.10
+  lock-passwd: false
+  name: cisco
+  plain-text-passwd: cisco
+  shell: /bin/bash
+  ssh-authorized-keys:
+  - VIRL-USER-SSH-PUBLIC-KEY
+  sudo: ALL=(ALL) ALL
+write_files:
+- path: /etc/init/ttyS0.conf
+  owner: root:root
+  content: |
+    # ttyS0 - getty
+    # This service maintains a getty on ttyS0 from the point the system is
+    # started until it is shut down again.
+    start on stopped rc or RUNLEVEL=[12345]
+    stop on runlevel [!12345]
+    respawn
+    exec /sbin/getty -L 115200 ttyS0 vt102
+  permissions: '0644'
+- path: /etc/systemd/system/dhclient@.service
+  content: |
+    [Unit]
+    Description=Run dhclient on %i interface
+    After=network.target
+    [Service]
+    Type=oneshot
+    ExecStart=/sbin/dhclient %i -pf /var/run/dhclient.%i.pid -lf /var/lib/dhclient/dhclient.%i.lease
+    RemainAfterExit=yes
+  owner: root:root
+  permissions: '0644'
+- path: /etc/xinetd.d/tftp
+  owner: root:root
+  permissions: '0644'
+  content: |
+    service tftp
+    {   
+      protocol        = udp
+      port            = 69
+      socket_type     = dgram
+      wait            = yes
+      user            = nobody
+      server          = /usr/sbin/in.tftpd
+      server_args     = /tftpboot
+      disable         = no
+    }
+- path: /var/www/html/upload_stats.php
+  owner: root:root
+  permissions: '0644'
+  content: |
+    &lt;?php
+
+    header(&quot;Content-Type: text/plain&quot;);
+
+    if (!isset($_GET['ostats']) || !isset($_GET['istats'])) {
+        die(&quot;ERROR: The arguments 'ostats' and 'istats' must be specified!&quot;);
+    }
+
+    $fd = fopen(&quot;/var/www/ostats.dat&quot;, &quot;a&quot;);
+
+    fwrite($fd, $_GET['ostats'] . &quot;\n&quot;);
+
+    @fclose($fd);
+
+    $fd = fopen(&quot;/var/www/istats.dat&quot;, &quot;a&quot;);
+
+    fwrite($fd, $_GET['istats'] . &quot;\n&quot;);
+
+    @fclose($fd);
+
+    ?&gt;
+    SUCCESS
+- path: /var/www/html/show_stats.php
+  owner: root:root
+  permissions: '0644'
+  content: |
+    &lt;?php
+
+    $contents = trim(file_get_contents(&quot;/var/www/istats.dat&quot;));
+
+    $ilines = explode(&quot;\n&quot;, $contents);
+
+    $contents = trim(file_get_contents(&quot;/var/www/ostats.dat&quot;));
+
+    $olines = explode(&quot;\n&quot;, $contents);
+
+    $points = array();
+
+    for ($i = 0; $i &lt; count($ilines); $i++) {
+        array_push($points, &quot;[$i, {$ilines[$i]}, {$olines[$i]}]&quot;);
+    }
+
+    ?&gt;
+
+    &lt;script type=&quot;text/javascript&quot; src=&quot;https://www.google.com/jsapi&quot;&gt;&lt;/script&gt;
+    &lt;div id=&quot;chart_div&quot;&gt;&lt;/div&gt;
+
+    &lt;script language=&quot;JavaScript&quot;&gt;
+    google.load('visualization', '1', {packages: ['corechart', 'line']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'X');
+        data.addColumn('number', 'Input');
+        data.addColumn('number', 'Output');
+      
+        data.addRows([&lt;?=implode(&quot;,&quot;, $points)?&gt;]);
+      
+        var options = {
+            hAxis: {
+                title: 'Time'
+            },
+            vAxis: {
+                title: 'Bytes'
+            },
+         };
+      
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+    &lt;/script&gt;
+- path: /tftpboot/tm_gather_stats.tcl
+  owner: root:root
+  permissions: '0644'
+  content: |
+    ::cisco::eem::event_register_timer watchdog time 10
+
+    namespace import ::cisco::eem::*
+    namespace import ::cisco::lib::*
+
+    if { [catch {cli_open} result] } {
+        error $result $errorInfo
+    }
+
+    array set cli $result
+
+    if { [catch {context_retrieve STATSCTXT prev_stats} result] } {
+        array set prev_stats [list]
+        set prev_stats(ibytes) 0
+        set prev_stats(obytes) 0
+    } else {
+        array set prev_stats $result
+    }
+
+    if { [catch {cli_exec $cli(fd) &quot;enable&quot;} result] } {
+        error $result $errorInfo
+    }
+
+    if { [catch {cli_exec $cli(fd) &quot;show interface gi0/1 | inc bytes&quot;} result] } {
+        error $result $errorInfo
+    }
+
+    foreach line [split $result &quot;\n&quot;] {
+        regexp {packets input, (\d+) bytes} $line -&gt; ibytes
+        regexp {packets output, (\d+) bytes} $line -&gt; obytes
+    }
+
+    set istats [expr $ibytes - $prev_stats(ibytes)]
+    set ostats [expr $obytes - $prev_stats(obytes)]
+
+    set prev_stats(ibytes) $ibytes
+    set prev_stats(obytes) $obytes
+
+    catch {context_save STATSCTXT prev_stats}
+
+    catch {cli_close $cli(fd) $cli(tty_id)}
+
+    ## HTTP CODE HERE
+
+    ## END HTTP CODE
+- path: /var/www/ostats.dat
+  owner: www-data
+  permissions: '0644'
+- path: /var/www/istats.dat
+  owner: www-data
+  permissions: '0644'
+- path: /etc/rc.local
+  owner: root:root
+  permissions: '0755'
+  content: |-
+    #!/bin/sh -e
+    ifconfig eth1 up 10.0.0.6 netmask 255.255.255.252
+    ifconfig eth2 up
+    dhclient -nw eth2
+    systemctl start dhclient@eth2.service
+    route add -host 192.168.0.2 gw 10.0.0.5 dev eth1
+    route add -net 10.0.0.4/30 gw 10.0.0.5 dev eth1
+    exit 0
+</entry>
+        </extensions>
+        <interface id="0" name="eth1" ipv4="10.0.0.6" netPrefixLenV4="30"/>
+        <interface id="1" name="eth2"/>
+    </node>
+    <node name="dCloud" type="ASSET" subtype="FLAT" location="181,336">
+        <interface id="0" name="link0"/>
+        <interface id="1" name="link1"/>
+    </node>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[2]" src="/virl:topology/virl:node[3]/virl:interface[1]"/>
+</topology>

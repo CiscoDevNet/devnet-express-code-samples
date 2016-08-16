@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.9" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.9/virl.xsd">
+    <extensions>
+        <entry key="AutoNetkit.enable_cdp" type="Boolean">true</entry>
+    </extensions>
+    <node name="RtrA" type="SIMPLE" subtype="IOSv" location="203,134" vmImage="IOSv [3fef8282-4bc4-482f-b065-e31f8bf2031b]" vmFlavor="IOSv [d0e4e1c6-7f76-45d7-9473-612587aad9c2]" ipv4="192.168.0.2">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="config" type="String">! IOS Config generated on 2015-10-06 10:35
+! by autonetkit_0.18.1
+!
+hostname RtrA
+boot-start-marker
+boot-end-marker
+!
+vrf definition Mgmt-intf
+!
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+!
+no aaa new-model
+!
+!
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service config
+enable password cisco
+ip classless
+ip subnet-zero
+no ip domain lookup
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login
+line con 0
+ password cisco
+!
+cdp run
+!
+!
+interface Loopback0
+  description Loopback
+  ip address 192.168.0.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+  description OOB Management
+  vrf forwarding Mgmt-intf
+  ! Configured on launch
+  no ip address
+  cdp enable
+  duplex full
+  speed auto
+  no shutdown
+!
+interface GigabitEthernet0/1
+  description to dCloud
+  no ip address
+  cdp enable
+  ip ospf cost 1
+  duplex full
+  speed auto
+  no shutdown
+!
+interface GigabitEthernet0/2
+  description to web-server
+  ip address 10.0.0.5 255.255.0.0
+  cdp enable
+  ip ospf cost 1
+  duplex full
+  speed auto
+  no shutdown
+!
+!
+!
+router ospf 1
+  network 192.168.0.2 0.0.0.0 area 0
+  log-adjacency-changes
+  passive-interface Loopback0
+  network 10.0.0.0 0.0.255.255 area 0
+!
+ip route 0.0.0.0 0.0.0.0 198.18.1.1
+!
+end
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1"/>
+        <interface id="1" name="GigabitEthernet0/2" ipv4="10.0.0.1" netPrefixLenV4="16"/>
+    </node>
+    <node name="dCloud" type="ASSET" subtype="FLAT" location="199,242">
+        <interface id="0" name="link0"/>
+        <interface id="1" name="link1"/>
+    </node>
+    <node name="web-server" type="SIMPLE" subtype="server" location="515,132" vmImage="server [878a632a-1196-4613-881c-2d1dc729078d]" vmFlavor="server [c61e5c92-058c-44e2-8661-506d437bd2c5]">
+        <extensions>
+            <entry key="AutoNetkit.ibgp_role" type="String">RR</entry>
+            <entry key="config" type="String">#cloud-config
+bootcmd:
+- ln -s -t /etc/rc.d /etc/rc.local
+hostname: web-server
+manage_etc_hosts: true
+runcmd:
+- start ttyS0
+- systemctl start getty@ttyS0.service
+- systemctl start rc-local
+- sed -i '/^\s*PasswordAuthentication\s\+no/d' /etc/ssh/sshd_config
+- echo &quot;UseDNS no&quot; &gt;&gt; /etc/ssh/sshd_config
+- service ssh restart
+- service sshd restart
+- route delete default gw 10.255.0.1
+- route add default gw 198.18.1.1
+- apt-get update
+- apt-get install -y php5
+- apt-get install -y tftpd
+- rm -f /var/www/html/index.html
+- mkdir -p /tftpboot
+- chmod 1777 /tftpboot
+users:
+- default
+- gecos: User configured by VIRL Configuration Engine 0.18.9
+  lock-passwd: false
+  name: cisco
+  plain-text-passwd: cisco
+  shell: /bin/bash
+  ssh-authorized-keys:
+  - VIRL-USER-SSH-PUBLIC-KEY
+  sudo: ALL=(ALL) ALL
+write_files:
+- path: /etc/init/ttyS0.conf
+  owner: root:root
+  content: |
+    # ttyS0 - getty
+    # This service maintains a getty on ttyS0 from the point the system is
+    # started until it is shut down again.
+    start on stopped rc or RUNLEVEL=[12345]
+    stop on runlevel [!12345]
+    respawn
+    exec /sbin/getty -L 115200 ttyS0 vt102
+  permissions: '0644'
+- path: /etc/systemd/system/dhclient@.service
+  content: |
+    [Unit]
+    Description=Run dhclient on %i interface
+    After=network.target
+    [Service]
+    Type=oneshot
+    ExecStart=/sbin/dhclient %i -pf /var/run/dhclient.%i.pid -lf /var/lib/dhclient/dhclient.%i.lease
+    RemainAfterExit=yes
+  owner: root:root
+  permissions: '0644'
+- path: /etc/xinetd.d/tftp
+  owner: root:root
+  permissions: '0644'
+  content: |
+    service tftp
+    {   
+      protocol        = udp
+      port            = 69
+      socket_type     = dgram
+      wait            = yes
+      user            = nobody
+      server          = /usr/sbin/in.tftpd
+      server_args     = /tftpboot
+      disable         = no
+    }
+- path: /var/www/html/dynamic_config.php
+  owner: root:root
+  permissions: '0644'
+  content: |
+    &lt;?php
+
+    $hostname = $_GET['hostname'];
+    if (!isset($hostname)) {
+            die(&quot;Hostname parameter has not been set.&quot;);
+    }
+
+    $len = strlen($hostname);
+    $hf = str_repeat('-', ($len * 2));
+    $padded = preg_replace(&quot;/(.)/&quot;, &quot;\\1 &quot;, strtoupper($hostname));
+
+    $result = array();
+    $result['EXEC'] = array();
+    $result['CONFIG'] = array();
+
+    $banner = array();
+    $b = array();
+    $b['type'] = 'login';
+
+    $btext = $hf . &quot;\n&quot;;
+    $btext .= $padded . &quot;\n&quot;;
+    $btext .= $hf . &quot;\n&quot;;
+    $btext .= &quot;This router is part of the Network Programmability and Automation Lab.\n&quot;;
+    $btext .= &quot;UNAUTHORIZED USE IS STRICTLY FORBIDDEN.\n&quot;;
+
+    $b['text'] = $btext;
+
+    array_push($banner, $b);
+    $result['CONFIG']['banner'] = $banner;
+
+    echo json_encode($result);
+
+    ?&gt;
+- path: /etc/rc.local
+  owner: root:root
+  permissions: '0755'
+  content: |-
+    #!/bin/sh -e
+    ifconfig eth1 up 10.0.0.6 netmask 255.255.0.0
+    ifconfig eth2 up
+    dhclient -nw eth2
+    systemctl start dhclient@eth2.service
+    route add -host 192.168.0.2 gw 10.0.0.5 dev eth1
+    route add -net 10.0.0.0/16 gw 10.0.0.5 dev eth1
+    exit 0
+</entry>
+        </extensions>
+        <interface id="0" name="eth1" ipv4="10.0.0.2" netPrefixLenV4="16"/>
+        <interface id="1" name="eth2"/>
+    </node>
+    <node name="dCloud-1" type="ASSET" subtype="FLAT" location="522,22">
+        <interface id="0" name="link0"/>
+    </node>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[3]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[2]"/>
+    <connection dst="/virl:topology/virl:node[3]/virl:interface[2]" src="/virl:topology/virl:node[4]/virl:interface[1]"/>
+</topology>
