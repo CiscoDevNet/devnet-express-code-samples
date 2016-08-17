@@ -8,14 +8,14 @@ import sys
 import xml.dom.minidom
 
 # the variables below assume the user is leveraging the
-# network programmability lab and accessing csr-nwp1
+# network programmability lab and accessing csr1000v
 # use the IP address or hostname of your CSR1000V device
-HOST = '198.18.133.218'
+HOST = 'ios-xe-mgmt.cisco.com'
 # use the NETCONF port for your CSR1000V device
-PORT = 2022
+PORT = 10000
 # use the user credentials for your CSR1000V device
-USER = 'admin'
-PASS = 'C1sco12345'
+USER = 'root'
+PASS = 'C!sc0123'
 MODULE_NAME = 'ietf-interfaces.yang'
 
 

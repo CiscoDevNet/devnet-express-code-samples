@@ -15,10 +15,10 @@ import sys
 sys.path.append('../../module03/03-environment-03-mission/')
 import lab_env
 
-HOST = '198.18.133.218'
-PORT = 8008
-USER = 'admin'
-PASS = 'C1sco12345'
+HOST = 'devnetapi.cisco.com/sandbox/restconf'
+PORT = 9443
+USER = 'root'
+PASS = 'C!sc0123'
 BASE = 'GigabitEthernet2'
 
 
@@ -69,15 +69,15 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		''' % (ip.ip, ip.netmask)
 
 	data      = data % (m.group(1), m.group(2), vlan, vlan, ipdata)
-	url       = "http://%s:%d/api/running/native/interface/%s/%s.%d" % (host, port, m.group(1), m.group(2), vlan)
+	url       = "https://%s/api/running/native/interface/%s/%s.%d" % (host, m.group(1), m.group(2), vlan)
 	headers   = {'content-type': 'application/vnd.yang.data+json', 'accept': 'application/vnd.yang.data+json'}
 
 	try:
 		result = requests.put(url, auth=(user, password), data=data, headers=headers, verify=not insecure)
-		lab_env.postSparkMessage("Hi! I'm adding a configuration change now to the CSR1000V!")
-		lab_env.postSparkMessage("Here is the change being applied using RESTCONF:")
-		lab_env.postSparkMessage("URL: %s" % url)
-		lab_env.postSparkMessage("JSON: %s" % data)
+		# lab_env.postSparkMessage("Hi! I'm adding a configuration change now to the CSR1000V!")
+		# lab_env.postSparkMessage("Here is the change being applied using RESTCONF:")
+		# lab_env.postSparkMessage("URL: %s" % url)
+		# lab_env.postSparkMessage("JSON: %s" % data)
 	except:
 		print(str(sys.exc_info()[0]))
 		return -1

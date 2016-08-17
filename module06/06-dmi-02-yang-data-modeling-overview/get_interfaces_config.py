@@ -10,15 +10,15 @@ import sys
 import xml.dom.minidom
 
 
-# the variables below assume the user is requesting access
-# to a IOS-XE device running in the DevNet Always On SandBox
-# use the IP address or hostname of your IOS-XE device
-HOST = '198.18.133.218'
-# use the NETCONF port for your IOS-XE device
-PORT = 2022
-# use the user credentials for your IOS-XE device
-USER = 'admin'
-PASS = 'C1sco12345'
+# the variables below assume the user is leveraging the
+# network programmability lab and accessing csr1000v
+# use the IP address or hostname of your CSR1000V device
+HOST = 'ios-xe-mgmt.cisco.com'
+# use the NETCONF port for your CSR1000V device
+PORT = 10000
+# use the user credentials for your CSR1000V device
+USER = 'root'
+PASS = 'C!sc0123'
 # XML file to open
 FILE = 'get_interfaces.xml'
 
