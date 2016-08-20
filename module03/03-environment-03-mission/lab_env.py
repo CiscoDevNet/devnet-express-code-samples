@@ -41,13 +41,13 @@ except Exception:
     pass
 
 # Replace YOUR-NAME-HERE in the line below
-LAB_USER = '<YOUR-NAME-HERE>'
+LAB_USER = 'Armen'
 
 # Get your Cisco Spark access token from developer.ciscospark.com
 # 1) Login
 # 2) Copy the Access Token from top-right corner portrait icon
 # 3) replace YOUR-ACCESS-TOKEN-HERE in the line below
-LAB_USER_SPARK_TOKEN = '<YOUR-ACCESS-TOKEN-HERE>'
+LAB_USER_SPARK_TOKEN = 'NWVjZjI5ZmMtNGYwNy00MmFkLTg5OTEtZTVlMjEzZjQ4NGFlNDU2YjlmODQtYmFh'
 
 # ############################################################################
 # Do not edit below this line, unless instructed to do so
@@ -73,7 +73,7 @@ APIC_EM_API = 'https://%s/api/v1' % APIC_EM_HOST
 
 RESTCONF_USR = 'root'
 RESTCONF_PWD = 'C!sc0123'
-RESTCONF_URL = 'https://devnetapi.cisco.com/sandbox/restconf/api/running/native/hostname'
+RESTCONF_URL = 'http://ios-xe-mgmt.cisco.com:9443/api/running/native/hostname'
 # Note: the below is to accommodate different syntax in Python 2 vs 3:
 try:
     RESTCONF_CREDENTIALS = bytes(RESTCONF_USR + ':' + RESTCONF_PWD)

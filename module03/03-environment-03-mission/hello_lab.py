@@ -1,141 +1,83 @@
-#!/usr/bin/env python
-# ############################################################################
-# Copyright (c) 2016 Bruno Klauser <bklauser@cisco.com>
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ''AS IS'' AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-#
-# TECHNICAL ASSISTANCE CENTER (TAC) SUPPORT IS NOT AVAILABLE FOR THIS SCRIPT.
-#
-# Always check for the latest Version of this script via http://cs.co/NWPLab
-# ############################################################################
-#
-# This is a simple hello lab script (will create the spark room if needed)
-#
-# ############################################################################
 import json
-import lab_env
+from myspark import spark_get_room_id, spark_send_message
 import requests
 import sys
-# Disable Certificate warning
-try:
-    requests.packages.urllib3.disable_warnings()
-except Exception:
-    pass
 
-# ############################################################################
-# Variables below
-# ############################################################################
-SPARK_ROOM_ID = None
+#Disbale all warning messages
+requests.packages.urllib3.disable_warnings()
 
-# ############################################################################
-# Find (or Create) Spark Room
-# ############################################################################
-r = requests.get(lab_env.SPARK_API_ROOMS, headers=lab_env.SPARK_HEADERS, verify=False)
-j = json.loads(r.text)
-
-for tmproom in j['items']:
-    if tmproom['title'] == lab_env.SPARK_ROOM_NAME:
-        SPARK_ROOM_ID = tmproom['id']
-        print("Found room ID for '" + lab_env.SPARK_ROOM_NAME + "' : " + SPARK_ROOM_ID)
-        break
-
-if SPARK_ROOM_ID is None:
-    print("Failed to find room ID for '" + lab_env.SPARK_ROOM_NAME + " creating it ...'")
-    t = json.dumps({'title': lab_env.SPARK_ROOM_NAME})
-    # print('Spark Request: ' + t)
-    r = requests.post(lab_env.SPARK_API_ROOMS, data=t, headers=lab_env.SPARK_HEADERS, verify=False)
-    # print('Spark Response: ' + r.text)
-    j = json.loads(r.text)
-    SPARK_ROOM_ID = j['id']
-
-if SPARK_ROOM_ID is None:
-    print("Failed to find or create room ID for '" + lab_env.SPARK_ROOM_NAME + "'")
-    sys.exit(1)
-
-# ############################################################################
-# Verify Lab Environment
-# ############################################################################
-
-ucgood = '\u2705'
-ucbad = '\u274C'
-
-# Python Version and Platform info
-labstate = ucgood + ' Python (' + sys.version + ' on ' + sys.platform + ')\n'
-
-# Spark Room info
-labstate = labstate + ucgood + ' Spark Room (ID=' + SPARK_ROOM_ID + ')\n'
-
-# dCloud Session info
-# TBD once session.xml is provisioned
-# dCloudSession = '000000'
-# dCloudDC = 'N/A'
-# dCloudPOD = 'POD %s (%s)' % (dCloudSession, dCloudDC)
-
-# APIC-EM info
-apic_credentials = json.dumps({'username': lab_env.APIC_EM_USR, 'password': lab_env.APIC_EM_PWD})
-tmp_headers = {'Content-type': 'application/json'}
-tmp_post = '%s/ticket' % lab_env.APIC_EM_API
-try:
-    r = requests.post(tmp_post, data=apic_credentials, verify=False, headers=tmp_headers)
-    ticket = r.json()['response']['serviceTicket']
-except Exception:
-    ticket = None
-# labstate = labstate + ucgood + ' APIC-EM Login '+ str(r.json()['response']) +')\n'
-
-# RESTCONF info
-try:
-    r = requests.get(lab_env.RESTCONF_URL, auth=(lab_env.RESTCONF_USR, lab_env.RESTCONF_PWD), headers=lab_env.RESTCONF_HEADERS, verify=False)
-    hostname = r.json()['ned:hostname']
-except Exception:
-    hostname = None
-
-# CSR1000 info
-# TBD
-
-# N9000 info
-# TBD
-
-# VIRL info
-# TBD
-
-# vNAM info
-# TBD
+# we need to know our token
+TOKEN = "NWVjZjI5ZmMtNGYwNy00MmFkLTg5OTEtZTVlMjEzZjQ4NGFlNDU2YjlmODQtYmFh" #'insert-your-token-from-deverloper.ciscospark.com-here'
+NAME =  "Dopes" #'event-room-name-inserted-here'
+RESTCONF = "ios-xe-mgmt.cisco.com" #'insert-restconf-ip-or-url-here'
+APIC_EM = "sandboxapic.cisco.com" #'insert-apic-em-ip-or-url-here'
 
 
-# ############################################################################
-# Post into Spark Room
-# ############################################################################
-messagetext = 'Hello %s this is %s \n' % (lab_env.LAB_SESSION, lab_env.LAB_USER)
-r = lab_env.postSparkMessage(messagetext)
-if ticket is not None:
-    r = lab_env.postSparkMessage('We were able to reach the APIC-EM controller!')
-else:
-    r = lab_env.postSparkMessage('Uh oh! We had issues reaching the APIC-EM controller! Try checking your lab setup.')
+#Function to check if restconf is accessible
+def check_restconf(address):
+    # Retconf enabled device's address and default entry level
+    restconf_api= "http://"+address+":9443/api"
 
-if hostname is not None:
-    r = lab_env.postSparkMessage('We were able to reach the CSR1000V using RESTCONF!')
-else:
-    r = lab_env.postSparkMessage('Uh oh! We had issues reaching the CSR1000V using RESTCONF! Try checking your lab setup.')
+    # Parameter passed during the call
+    params = {"verbose" : ""}
+
+    # Necessary headers to make an API call
+    headers = {
+        "authorization" : "Basic cm9vdDpDIXNjMDEyMw==",
+        "content-type" : "application/vnd.yang.data+json",
+        "accept" : "application/vnd.yang.api+json"
+    }
+
+    #Making Rest
+    restconf_response = requests.get(restconf_api, headers=headers, params=params, verify=False)
+
+    if restconf_response.ok:
+        return True
+    else:
+        return False
+
+#Function to check if apic-em is accessible
+def check_apic_em(address):
+    # Retconf enabled device's address and default entry level
+    apic_em_api= "https://"+address+"/api/v1/ticket"
+
+    # Necessary headers to make an API call
+    headers = {
+        "content-type": "application/json"
+    }
+    payload = {
+        "username" : "devnetuser",
+        "password" : "Cisco123!"
+    }
+    #Making Rest call
+    apic_em_response = requests.post(apic_em_api, headers=headers, data=json.dumps(payload), verify=False)
+
+    if apic_em_response.ok:
+        return True
+    else:
+        return False
 
 
-# ############################################################################
-# EOF
-# ############################################################################
+
+# this is the variable of the room id we need to figure out:
+room_id = None
+# you can replace room ID from output of script here
+# room_id = 'your-room-id-output-from-the-script'
+
+
+if not room_id:
+    room_id = spark_get_room_id(TOKEN, NAME)
+
+
+if room_id:
+    spark_send_message(TOKEN, room_id, 'Hello room! My script verified that I can post messages to Spark using REST API calls.\n')
+    if check_restconf(RESTCONF):
+        spark_send_message(TOKEN, room_id, 'It also verified that RESTCONF enabled device is working properly.\n')
+    else:
+        spark_send_message(TOKEN, room_id, 'Unfortunately, RESTCONF enabled device is not working properly.\n')
+    if check_apic_em(APIC_EM):
+        spark_send_message(TOKEN, room_id, 'It also verified that APIC-EM is working properly.\n')
+    else:
+        spark_send_message(TOKEN, room_id, 'Unfortunately, APIC-EM is working properly.\n')
+    print("Please check room " + NAME + ", there are messages posted on your behlaf")
+
