@@ -7,10 +7,10 @@ import sys
 requests.packages.urllib3.disable_warnings()
 
 # we need to know our token
-TOKEN = "NWVjZjI5ZmMtNGYwNy00MmFkLTg5OTEtZTVlMjEzZjQ4NGFlNDU2YjlmODQtYmFh" #'insert-your-token-from-deverloper.ciscospark.com-here'
-NAME =  "Dopes" #'event-room-name-inserted-here'
-RESTCONF = "ios-xe-mgmt.cisco.com" #'insert-restconf-ip-or-url-here'
-APIC_EM = "sandboxapic.cisco.com" #'insert-apic-em-ip-or-url-here'
+TOKEN = 'insert-your-token-from-deverloper.ciscospark.com-here'
+NAME =  'event-room-name-inserted-here'
+RESTCONF = 'insert-restconf-ip-or-url-here'
+APIC_EM = 'insert-apic-em-ip-or-url-here'
 
 
 #Function to check if restconf is accessible
