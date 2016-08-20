@@ -13,7 +13,9 @@ import requests
 import sys
 
 sys.path.append('../../module03/03-environment-03-mission/')
-import lab_env
+import hello_lab
+import myspark
+
 
 HOST = 'devnetapi.cisco.com/sandbox/restconf'
 PORT = 9443
@@ -74,10 +76,13 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 
 	try:
 		result = requests.put(url, auth=(user, password), data=data, headers=headers, verify=not insecure)
-		# lab_env.postSparkMessage("Hi! I'm adding a configuration change now to the CSR1000V!")
-		# lab_env.postSparkMessage("Here is the change being applied using RESTCONF:")
-		# lab_env.postSparkMessage("URL: %s" % url)
-		# lab_env.postSparkMessage("JSON: %s" % data)
+		room = myspark.spark_get_room_id(hello_lab.TOKEN, hello_lab.NAME)
+		myspark.spark_send_message(hello_lab.TOKEN, room, "Hi! I'm adding a configuration change now to the CSR1000V!")
+		myspark.spark_send_message(hello_lab.TOKEN, room, "Here is the change being applied using RESTCONF:")
+		myspark.spark_send_message(hello_lab.TOKEN, room, "URL: %s" % url)
+		myspark.spark_send_message(hello_lab.TOKEN, room, "JSON: %s" % data)
+
+
 	except:
 		print(str(sys.exc_info()[0]))
 		return -1
@@ -86,7 +91,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 	if result.status_code == 201:
 		return 0
 
-	# somethine went wrong
+	# something went wrong
 	print(result.status_code, result.text)
 	return -1
 

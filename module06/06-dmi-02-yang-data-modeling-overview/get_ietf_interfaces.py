@@ -33,7 +33,7 @@ def main():
         yang_module = xml_doc.getElementsByTagName("data")
 
         # save the YANG module to a file
-        with open(MODULE_NAME, mode='wb') as f:
+        with open(MODULE_NAME, mode='w+') as f:
             f.write(yang_module[0].firstChild.nodeValue)
 
 if __name__ == '__main__':
