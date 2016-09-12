@@ -7,8 +7,8 @@ import sys
 requests.packages.urllib3.disable_warnings()
 
 # we need to know our token
-TOKEN = 'insert-your-token-from-deverloper.ciscospark.com-here'
-NAME =  'event-room-name-inserted-here'
+TOKEN = 'insert-your-token-from-developer.ciscospark.com-here'
+NAME =  'existing-event-room-name-inserted-here'
 RESTCONF = 'insert-restconf-ip-or-url-here'
 APIC_EM = 'insert-apic-em-ip-or-url-here'
 
@@ -16,7 +16,7 @@ APIC_EM = 'insert-apic-em-ip-or-url-here'
 #Function to check if restconf is accessible
 def check_restconf(address):
     # Retconf enabled device's address and default entry level
-    restconf_api= "http://"+address+":9443/api"
+    restconf_api= "https://"+address+"/api"
 
     # Parameter passed during the call
     params = {"verbose" : ""}
@@ -79,5 +79,4 @@ if room_id:
         spark_send_message(TOKEN, room_id, 'It also verified that APIC-EM is working properly.\n')
     else:
         spark_send_message(TOKEN, room_id, 'Unfortunately, APIC-EM is working properly.\n')
-    print("Please check room " + NAME + ", there are messages posted on your behlaf")
-
+    print("Please check room " + NAME + ", there are messages posted on your behalf")
