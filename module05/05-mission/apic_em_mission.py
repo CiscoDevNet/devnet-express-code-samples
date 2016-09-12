@@ -116,7 +116,7 @@ def get_roomID():
 
     for item in r_json["items"]:
         print("Title " + item["title"])
-        print("Room ID " + item["id\n\n"])
+        print("Room ID " + item["id"] + "\n\n")
         user_input = input(
             "Is this the room you are looking for to post?[y/n] ")
         if user_input.lower() == 'y' or user_input.lower() == 'yes':
@@ -150,7 +150,7 @@ def post_spark(text, room_id):
     print("\nCheck the Spark Room, you just posted a message!")
 
 
-if __name__ == "main":
+if __name__ == "_main_":
     # Get authentication ticket from APIC-EM
     theTicket = getTicket()
 
