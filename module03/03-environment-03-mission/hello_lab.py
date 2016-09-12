@@ -8,7 +8,7 @@ requests.packages.urllib3.disable_warnings()
 
 # we need to know our token
 TOKEN = 'insert-your-token-from-developer.ciscospark.com-here'
-NAME =  'existing-event-room-name-inserted-here'
+NAME = 'existing-event-room-name-inserted-here'
 RESTCONF = 'insert-restconf-ip-or-url-here'
 APIC_EM = 'insert-apic-em-ip-or-url-here'
 
@@ -16,14 +16,14 @@ APIC_EM = 'insert-apic-em-ip-or-url-here'
 #Function to check if restconf is accessible
 def check_restconf(address):
     # Retconf enabled device's address and default entry level
-    restconf_api= "https://"+address+"/api"
+    restconf_api= "http://"+address+":8008/api"
 
     # Parameter passed during the call
     params = {"verbose" : ""}
 
     # Necessary headers to make an API call
     headers = {
-        "authorization" : "Basic cm9vdDpDIXNjMDEyMw==",
+        "authorization" : "Basic YWRtaW46QzFzY28xMjM0NQ==",
         "content-type" : "application/vnd.yang.data+json",
         "accept" : "application/vnd.yang.api+json"
     }
@@ -46,8 +46,8 @@ def check_apic_em(address):
         "content-type": "application/json"
     }
     payload = {
-        "username" : "devnetuser",
-        "password" : "Cisco123!"
+        "username" : "admin",
+        "password" : "C1sco12345"
     }
     #Making Rest call
     apic_em_response = requests.post(apic_em_api, headers=headers, data=json.dumps(payload), verify=False)
