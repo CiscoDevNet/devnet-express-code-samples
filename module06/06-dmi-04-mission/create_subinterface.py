@@ -17,10 +17,10 @@ import hello_lab
 import myspark
 
 
-HOST = 'devnetapi.cisco.com/sandbox/restconf'
-PORT = 9443
-USER = 'root'
-PASS = 'C!sc0123'
+HOST = '198.18.133.218'
+PORT = 8008
+USER = 'admin'
+PASS = 'C1sco12345'
 BASE = 'GigabitEthernet2'
 
 
@@ -71,7 +71,7 @@ def create_vlan(host, port, user, password, interface, vlan, ip, insecure):
 		''' % (ip.ip, ip.netmask)
 
 	data      = data % (m.group(1), m.group(2), vlan, vlan, ipdata)
-	url       = "https://%s/api/running/native/interface/%s/%s.%d" % (host, m.group(1), m.group(2), vlan)
+	url       = "http://%s:%s/api/running/native/interface/%s/%s.%d" % (host, port, m.group(1), m.group(2), vlan)
 	headers   = {'content-type': 'application/vnd.yang.data+json', 'accept': 'application/vnd.yang.data+json'}
 
 	try:

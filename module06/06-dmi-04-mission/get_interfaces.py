@@ -3,14 +3,15 @@
 import requests
 import sys
 
-HOST = 'devnetapi.cisco.com/sandbox/restconf'
-USER = 'root'
-PASS = 'C!sc0123'
+HOST = '198.18.133.218'
+PORT = 8008
+USER = 'admin'
+PASS = 'C1sco12345'
 requests.packages.urllib3.disable_warnings()
 
 def get_configured_interfaces():
     """Retrieving config data (interface) from RESTCONF."""
-    url = "https://{h}/api/running/interfaces".format(h=HOST)
+    url = "http://{h}:{p}/api/running/interfaces".format(h=HOST, p=PORT)
     # RESTCONF media types for REST API headers
     headers = {'Content-Type': 'application/vnd.yang.data+json',
                'Accept': 'application/vnd.yang.data+json'}
