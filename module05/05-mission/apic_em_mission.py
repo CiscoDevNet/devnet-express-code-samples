@@ -40,7 +40,7 @@ def getTicket():
 
     # parse the json to get the service ticket
     ticket = r_json["response"]["serviceTicket"]
-
+    
     return ticket
 
 
@@ -150,7 +150,7 @@ def post_spark(text, room_id):
     print("\nCheck the Spark Room, you just posted a message!")
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     # Get authentication ticket from APIC-EM
     theTicket = getTicket()
 
