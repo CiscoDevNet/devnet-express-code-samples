@@ -19,7 +19,7 @@ def createRoom(the_header,room_name):
 	uri = 'https://api.ciscospark.com/v1/rooms'
 	resp = requests.post(uri, data=roomInfo, headers=the_header)
 	var = resp.json()
-	print("createRoom JSON: ", var)
+	print("createRoom JSON: ", var)	
 	#add code here to parse and return the room id.
     
 	
