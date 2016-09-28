@@ -24,11 +24,11 @@ def get_token(url):
     # Combine URL, API call and parameters variables
     url += api_call
 
-    response = requests.post(
-        url, data=json.dumps(payload), headers=headers, verify=False).json()
+    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False).json()
 
     # Return authentication token from respond body
     return response["response"]["serviceTicket"]
+
 
 def get_device_id(token, url):
 
@@ -36,13 +36,11 @@ def get_device_id(token, url):
     api_call = "/network-device"
 
     # Header information
-    headers = {
-        "content-type": "application/json",
-        "X-AUTH-TOKEN": token
-    }
+    headers = {"X-AUTH-TOKEN": token}
 
     # Combine URL, API call and parameters variables
     url += api_call
+	
     response = requests.get(url, headers=headers, verify=False).json()
 
     # Iterate over the response and find first device with access role.
@@ -51,6 +49,7 @@ def get_device_id(token, url):
         if item['role'] == 'ACCESS':
             return item['id']
 
+			
 def get_config(token, url, id):
 
     # Define API Call. To get specific device's configuration
@@ -58,10 +57,7 @@ def get_config(token, url, id):
     api_call = "/network-device/" + id + "/config"
 
     # Header information
-    headers = {
-        "content-type": "application/json",
-        "X-AUTH-TOKEN": token
-    }
+    headers = {"X-AUTH-TOKEN": token}
 
     # Combine URL, API call variables
     url += api_call
@@ -76,6 +72,7 @@ def get_config(token, url, id):
 
     # Close the file when writing is complete
     file.close()
+
 
 # Assign obtained authentication token to a variable. Provide APIC-EM's
 # URL address
