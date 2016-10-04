@@ -1,7 +1,0 @@
-<config>
-   <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
-      <interface>
-        <name>3</name>
-      </interface>
-   </interfaces>
-</config>
