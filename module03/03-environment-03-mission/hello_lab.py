@@ -16,11 +16,10 @@ SPARK_ROOM = 'existing-room-name-inserted-here'
 # The below URLs, usernames and passwords
 # match the dCloud DNA lab
 RESTCONF_URL = '198.18.133.218:8008'
-APIC_EM_URL = '198.18.129.100'
-
 RC_USER = 'admin'
 RC_PASS = 'C1sco12345'
 
+APIC_EM_URL = '198.18.129.100'
 AP_USER = 'admin'
 AP_PASS = 'C1sco12345'
 
