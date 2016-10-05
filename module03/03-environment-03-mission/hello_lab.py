@@ -30,21 +30,18 @@ def check_restconf(address):
     """
 
     # RESTCONF enabled device's address and default entry level
-    restconf_api = "http://" + address + "/api"
+    restconf_api = 'http://' + address + '/api'
 
     # Parameter passed during the call
-    params = {"verbose": ""}
+    params = dict(verbose='')
 
     # Necessary headers to make an API call
-    headers = {
-        "content-type": "application/vnd.yang.data+json",
-        "accept": "application/vnd.yang.api+json"
-    }
+    headers = dict(accept='application/vnd.yang.api+json')
 
     # Actual REST call
     restconf_response = requests.get(restconf_api, headers=headers,
                                      auth=(RC_USER, RC_PASS),
-                                     params=params, verify=False)
+                                     params=params)
     return restconf_response.ok
 
 
@@ -54,15 +51,15 @@ def check_apic_em(address):
     """
 
     # APIC-EM address and default entry level
-    apic_em_api = "https://" + address + "/api/v1/ticket"
+    apic_em_api = 'https://' + address + '/api/v1/ticket'
 
     # Necessary headers to make an API call
     headers = {
-        "content-type": "application/json"
+        'content-type': 'application/json'
     }
     payload = {
-        "username": AP_USER,
-        "password": AP_PASS
+        'username': AP_USER,
+        'password': AP_PASS
     }
     # Making Rest call
     apic_em_response = requests.post(
@@ -81,7 +78,7 @@ room_id = None
 
 if not room_id:
     room_id = spark_get_room_id(SPARK_TOKN, SPARK_ROOM)
-
+    print('Your room ID "{id}".'.format(id=room_id))
 
 if room_id:
     spark_send_message(SPARK_TOKN, room_id,
@@ -103,5 +100,5 @@ if room_id:
         spark_send_message(SPARK_TOKN, room_id,
                            'Unfortunately, APIC-EM is '
                            'NOT working properly.')
-    print("Please check room " + SPARK_ROOM +
-          ", there are messages posted on your behalf.")
+    print('Please check room ' + SPARK_ROOM +
+          ', there are messages posted on your behalf.')
