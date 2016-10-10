@@ -5,5 +5,8 @@ var topologyData = {
     ],
     links: [
         {"source": 0, "target": 1}
+    ],
+    nodeSet: [
+        {"id": 0, "nodes": [0, 1]}
     ]
 };
