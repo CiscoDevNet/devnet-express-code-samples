@@ -1,6 +1,7 @@
+#!/usr/bin/env python
+
 # Import necessary modules
 import requests
-import json
 
 # Define necessary global variables
 VIRL_URL = ""
@@ -96,8 +97,8 @@ def packet_capture(url, username, password, sim):
 
         # Check to see if node is not ~mgmt-lxc and then assign it
         if node != '~mgmt-lxc':
-            nodes[i+1] = node
-            print(str(i+1) + ":" + " "*10 + node)
+            nodes[i + 1] = node
+            print(str(i + 1) + ":" + " " * 10 + node)
 
     # Variable which will hold a node name chosen by the user
     mission_node = ''
@@ -136,23 +137,22 @@ def packet_capture(url, username, password, sim):
         if iface != 'management':
             ifaces[str(i)] = iface_response[sim][mission_node][iface]["name"]
             print(
-                str(i) + " "*17 + iface_response[sim][mission_node][iface]["name"])
+                str(i) + " " * 17 + iface_response[sim][mission_node][iface]["name"])
 
     # Variable which will hold an interface ID chosen by the user
     mission_iface = ""
 
-    # While loop helps to make sure that user chooses correct interface ID
     while not mission_iface:
-        user_input = input(
-            "\nOn which interface ID would you like to start capturing packets? ")
+        user_input = input("\nOn which interface ID would "
+                           "you like to start capturing packets? ")
         if user_input in ifaces.keys():
             mission_iface = user_input
         else:
-            print(
-                "Your choice is not valid. Please select a valid interface ID\n")
+            print("Your choice is not valid. Please select "
+                  "a valid interface ID\n")
             print("Interface ID      Interface Name")
             for num in ifaces.keys():
-                print(str(num) + " "*17 + ifaces[num])
+                print(str(num) + " " * 17 + ifaces[num])
 
     # Capture URL against which the API call will be placed
     capture_api = ""
@@ -171,9 +171,8 @@ def packet_capture(url, username, password, sim):
     # Check if call was successful, if true print it
     if capture_response.status_code == 200:
         print(capture_response.text)
-        print(
-            "\n\nPacket capture was successfully started. \
-            \nGo to VM Maestro in order to download the .pcap file")
+        print("\n\nPacket capture was successfully started. "
+              "\nGo to VM Maestro in order to download the .pcap file")
 
 
 def stop_node(url, username, password, sim):
@@ -190,8 +189,8 @@ def stop_node(url, username, password, sim):
 
     # Check if call was successful, if true print it and exit the application
     if stop_response.status_code == 200:
-        input(
-            "\nSimulation has been stopped. Click any key to exit the application")
+        input("\nSimulation has been stopped. "
+              "Press any key to exit the application")
         exit()
 
 
@@ -209,14 +208,12 @@ def main():
 
     # Print a message asking user to verify that all nodes have an [ACTIVE -
     # REACHABLE] state
-    print(
-        "Please go to VM Maestro and make sure all nodes \n \
-have [ACTIVE - REACHABLE] state in simulation pane. \n \
-It should only take 2-3 minutes.")
-    print(
-        "If you proceed without waiting, the next function \n \
-will create non functional .pcap file and you will \n \
-not be able to download it from VM Maestro.")
+    print("Please go to VM Maestro and make sure all nodes "
+          "have [ACTIVE - REACHABLE] state in simulation pane. "
+          "It should only take 2-3 minutes.")
+    print("If you proceed without waiting, the next function "
+          "will create a non-functional .pcap file and you will "
+          "not be able to download it from VM Maestro.")
 
     # While loop will run infinitely until user confirms that all nodes are
     # active and reachable
@@ -256,3 +253,4 @@ When you are ready, come back to terminal screen and answer the question again")
 # true run main() function
 if __name__ == '__main__':
     main()
+
