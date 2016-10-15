@@ -1,9 +1,11 @@
 import json
 import requests
 
+#MISSION: FILL IN THE REQUESTED DETAILS
 ACCESS_TOKEN = "" #put your access token between the quotes
 ROOM_NAME = "" #give the room you will create a name
 YOUR_MESSAGE = ""  #put the message that you will post to the room
+
 
 #sets the header to be used for authentication and data format to be sent.
 def setHeaders():         
@@ -20,7 +22,7 @@ def createRoom(the_header,room_name):
 	resp = requests.post(uri, data=roomInfo, headers=the_header)
 	var = resp.json()
 	print("createRoom JSON: ", var)	
-	#add code here to parse and return the room id.
+	#MISSION: ADD CODE HERE TO PARSE AND RETURN THE ROOM ID.	
     
 	
 # adds a new member to the room.  Member e-mail is test@test.com
@@ -37,9 +39,11 @@ def postMsg(the_header,roomId,message):
 	resp = requests.post(uri, data=message, headers=the_header)
 	print("postMsg JSON: ", resp.json())
 
-#Mission write code to retrieve and display about the room
+#MISSION: WRITE CODE TO RETRIEVE AND DISPLAY DETAILS ABOUT THE ROOM.
 def getRoomInfo(the_header,roomId):
-	print("In function getRoomInfo")	
+	print("In function getRoomInfo")		
+	
+	
 
 
 if __name__ == '__main__':
@@ -49,6 +53,7 @@ if __name__ == '__main__':
 	#passing roomId to members function here to add member to the room.
     addMembers(header,room_id)   
 	#passing roomId to message function here to Post Message to a room.
-    postMsg(header,room_id,YOUR_MESSAGE) 
-	
+    postMsg(header,room_id,YOUR_MESSAGE)
+	#MISSION: ADD FUNCTION CALL getRoomInfo(header,room_id)
+    
     

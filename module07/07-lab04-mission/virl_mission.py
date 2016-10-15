@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Import necessary modules
 import requests
 
@@ -151,8 +153,13 @@ def packet_capture(url, username, password, sim):
         if user_input in ifaces.keys():
             mission_iface = user_input
         else:
+<<<<<<< HEAD
             print("\nYour choice is not valid. Please select "
                   "a valid interface ID\n\n")
+=======
+            print("Your choice is not valid. Please select "
+                  "a valid interface ID\n")
+>>>>>>> 86fc614d87f714ad4997b64500d7a5d8b6a3e669
             print("Interface ID      Interface Name")
             for num in ifaces.keys():
                 print(str(num) + " " * 17 + ifaces[num])
@@ -175,7 +182,11 @@ def packet_capture(url, username, password, sim):
     if capture_response.status_code == 200:
         print(capture_response.text)
         print("\n\nPacket capture was successfully started. "
+<<<<<<< HEAD
               "\nGo to VIRL UWM page in order to download the .pcap file")
+=======
+              "\nGo to VM Maestro in order to download the .pcap file")
+>>>>>>> 86fc614d87f714ad4997b64500d7a5d8b6a3e669
 
 
 def stop_simulation(url, username, password, sim):
@@ -211,12 +222,21 @@ def main():
 
     # Print a message asking user to verify that all nodes have an [ACTIVE -
     # REACHABLE] state
+<<<<<<< HEAD
     print("Please go to VIRL UWM page and make sure all nodes \n"
           "are in active and reachable state. \n"
           "It should only take 2-3 minutes.")
     print("\nIf you proceed without waiting, the next function \n"
           "will create a non-functional .pcap file and you will \n"
           "not be able to download it from VIRL UWM page.\n")
+=======
+    print("Please go to VM Maestro and make sure all nodes "
+          "have [ACTIVE - REACHABLE] state in simulation pane. "
+          "It should only take 2-3 minutes.")
+    print("If you proceed without waiting, the next function "
+          "will create a non-functional .pcap file and you will "
+          "not be able to download it from VM Maestro.")
+>>>>>>> 86fc614d87f714ad4997b64500d7a5d8b6a3e669
 
     # While loop will run infinitely until user confirms that all nodes are
     # active and reachable
@@ -256,3 +276,4 @@ def main():
 # true run main() function
 if __name__ == '__main__':
     main()
+
