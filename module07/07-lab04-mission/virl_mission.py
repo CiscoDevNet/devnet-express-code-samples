@@ -58,7 +58,7 @@ def start_sim(url, username, password):
     simulation_start_url = url + ":19399" + simulation_start_api
 
     # Open .virl file and assign it to the variable
-    virl_file = open('mission.virl', 'r')
+    virl_file = open('mission.virl', 'rb')
 
     # Parameter which will be passed to the server with the API call
     simulation_name = ''
@@ -259,3 +259,4 @@ def main():
 # true run main() function
 if __name__ == '__main__':
     main()
+

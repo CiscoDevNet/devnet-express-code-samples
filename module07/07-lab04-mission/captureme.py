@@ -45,7 +45,7 @@ def start_sim(cfg, filename):
     cfg.logger.info('Simulation start...')
 
     # Open .virl file and assign it to the variable
-    with open(filename, 'r') as virl_file:
+    with open(filename, 'rb') as virl_file:
         # Parameter which will be passed to the server with the API call
         simulation_name = 'Mission'
         params = {'file': simulation_name}
