@@ -7,21 +7,25 @@ import json
 # Disable warnings
 requests.packages.urllib3.disable_warnings()
 
-# controller = IP Address of the controller
-controller = ""
+# MISSION: Assign the APIC-EM IP address to the CONTROLLER variable
+CONTROLLER = None
 
-# Authentication Token obtained from Spark's Developer page
-auth = ""
+# MISSION: Assign your authentication token obtained from Spark's Developer page
+AUTH = None
 
 def getTicket():
-    # Provide APIC-EM's username
-    username = ""
+    # MISSION: Provide the APIC-EM username
+    username = None
 
-    # Provide password for the username defined above
-    password = ""
+    # MISSION: Provide the password for the username defined above
+    password = None
 
-    # put the ip address or dns of your apic-em controller in this url
-    url = "https://" + controller + "/api/v1/ticket"
+    if CONTROLLER == None or username == None or password == None:
+        print("Please assign values to the CONTROLLER, username and password variables.")
+        exit(1)
+		
+    # put the ip address or dns of your apic-em CONTROLLER in this url
+    url = "https://" + CONTROLLER + "/api/v1/ticket"
 
     # the username and password to access the APIC-EM Controller
     payload = {"username": username, "password": password}
@@ -30,8 +34,7 @@ def getTicket():
     header = {"content-type": "application/json"}
 
     # Performs a POST on the specified url to get the service ticket
-    response = requests.post(url, data=json.dumps(
-        payload), headers=header, verify=False)
+    response = requests.post(url, data=json.dumps(payload), headers=header, verify=False)
 
     print(response)
 
@@ -49,12 +52,16 @@ def getTopology(ticket):
     # Final Result
     result = []
 
-    # API Call to retrieve physical topology
-    api_call = ""
+    # MISSION: Assign the function name to the api_call variable to retrieve the physical topology
+    api_call = None
 
+    if api_call == None:
+        print("Please assign a function call to variable api_call.")
+        exit(1)
+		
     # URL for topology REST API call to get list of existing devices on the
     # network, and build topology
-    url = "https://" + controller + "/api/v1" + api_call
+    url = "https://" + CONTROLLER + "/api/v1" + api_call
 
     # Content type as well as the ticket must be included in the header
     header = {"content-type": "application/json", "X-Auth-Token": ticket}
@@ -95,12 +102,14 @@ def getTopology(ticket):
                         break
     return(result)
 
-
+# Returns the Spark room ID for the user selected Spark room.
 def get_roomID():
     # API Call for rooms
     api_call = "rooms"
 
-    # Please provide your personal authorization token bellow
+    if AUTH == None:
+        print("Please assign your Spark authorization token to variable AUTH.")
+        exit(1)
 
 
     # Cisco Spark's API URL address
@@ -108,7 +117,7 @@ def get_roomID():
 
     # Content type as well as the authorization must be included in the header
     header = {"content-type": "application/json; charset=utf-8",
-              "Authorization": "Bearer " + auth}
+              "Authorization": "Bearer " + AUTH}
 
     # this statement performs a GET on the specified network device url
     response = requests.get(url, headers=header, verify=False)
@@ -125,10 +134,8 @@ def get_roomID():
             continue
 
 
-def post_spark(text, room_id):
-    """
-    This function will post your text to DevNet Express Room in Spark
-    """
+#Posts message to the passed in Spark room.
+def post_spark(text, room_id):    
     # API Call to for messages
     api_call = "messages"
 
@@ -137,7 +144,7 @@ def post_spark(text, room_id):
 
     # Content type as well as the authorization must be included in the header
     header = {"content-type": "application/json; charset=utf-8",
-              "Authorization": "Bearer " + auth}
+              "Authorization": "Bearer " + AUTH}
 
     payload = {
         "roomId": room_id,
@@ -147,7 +154,7 @@ def post_spark(text, room_id):
     response = requests.post(url, data=json.dumps(
         payload), headers=header, verify=False)
 
-    print("\nCheck the Spark Room, you just posted a message!")
+    print("\nCheck the Spark Room.  You've just posted a message!")
 
 
 if __name__ == "__main__":
@@ -160,5 +167,5 @@ if __name__ == "__main__":
     # Get the room ID
     id = get_roomID()
 
-    # Use room ID and retrieved topology information to post in the Spark
+    # Use room ID and retrieved topology information to post in the Spark room
     post_spark(message, id)
