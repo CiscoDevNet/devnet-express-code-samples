@@ -251,12 +251,11 @@ def main():
     print(
         "\nScript will now stop the node. You should see appropriate message briefly.\n")
 
-    # start stop_node(url, username, password, sim) function
-    stop_node(VIRL_URL, USERNAME, PASSWORD, simulation)
+    # start stop_simulation(url, username, password, sim) function
+    stop_simulation(VIRL_URL, USERNAME, PASSWORD, simulation)
 
 
 # Check if this python script has been run as a standalone program, if
 # true run main() function
 if __name__ == '__main__':
     main()
-

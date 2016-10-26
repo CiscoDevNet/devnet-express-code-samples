@@ -53,8 +53,9 @@ def nodes_in_sim(url, username, password, sim):
 
     # Print how many active nodes are in the simulations and choose a number of nodes to be stopped.
     num_nodes = int(input("\n\nVIRL reports " + str(len(response[sim])) +
-                         " active nodes in the simulation. " +
-                          "How many would you like to stop? "))
+	                         " active nodes in the simulation. \n" +
+	                          "How many would you like to stop? [1-" + str(len(response[sim])) +
+                              "] "))
 
     # Create an empty dictionary which will contain all nodes information
     all_nodes = {}
@@ -71,7 +72,7 @@ def nodes_in_sim(url, username, password, sim):
 
     # While num_nodes does not equal to zero run below code
     while num_nodes != 0:
-        user_input = input("\n\n\nEnter the name of the node that you would like to shutdown. " +
+        user_input = input("\n\n\nEnter the name of the node that you would like to shutdown. \n" +
        	                "Please choose a node in ACTIVE state: ")
         if user_input in all_nodes.values():
             nodes.append(user_input)
@@ -112,4 +113,3 @@ def stop_nodes(url, username, password, sim, nodes):
 
 
 stop_nodes(VIRL_URL,USERNAME,PASSWORD, SIMULATION, NODES)
-
