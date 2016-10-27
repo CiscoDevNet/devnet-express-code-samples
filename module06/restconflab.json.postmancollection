@@ -30,7 +30,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
@@ -54,7 +54,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
@@ -78,7 +78,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
@@ -102,7 +102,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
@@ -126,7 +126,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
@@ -150,7 +150,7 @@
 			"currentHelper": "basicAuth",
 			"helperAttributes": {
 				"id": "basic",
-				"username": "{{user}}",
+				"username": "{{username}}",
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
