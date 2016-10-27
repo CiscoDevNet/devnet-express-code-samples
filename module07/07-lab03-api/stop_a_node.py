@@ -107,7 +107,7 @@ def stop_nodes(url, username, password, sim, nodes):
 
         # Check if the code execution was successful
         if response.status_code == 200:
-            print("\nSuccessful stopped " + node)
+            print("\nSuccessfully stopped " + node)
 
 
 
