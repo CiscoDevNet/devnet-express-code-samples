@@ -41,7 +41,7 @@ def check_restconf(address):
     # Actual REST call
     restconf_response = requests.get(restconf_api, headers=headers,
                                      auth=(RC_USER, RC_PASS),
-                                     params=params)
+                                     params=params, timeout=5.0)
     return restconf_response.ok
 
 
@@ -63,7 +63,7 @@ def check_apic_em(address):
     }
     # Making Rest call
     apic_em_response = requests.post(
-        apic_em_api, headers=headers, json=payload, verify=False)
+        apic_em_api, headers=headers, json=payload, verify=False, timeout=5.0)
 
     return apic_em_response.ok
 
