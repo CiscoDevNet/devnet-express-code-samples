@@ -12,7 +12,7 @@ username = "guest"
 password = "guest"
 
 # Open the API.virl file
-virl_file=open('API.virl', 'r')
+virl_file=open('API.virl', 'rb')
 
 # Create headers and payload information
 headers = {'content-type': 'text/xml'}
