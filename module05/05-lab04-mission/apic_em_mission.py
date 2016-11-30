@@ -23,7 +23,7 @@ def getTicket():
     if CONTROLLER == None or username == None or password == None:
         print("Please assign values to the CONTROLLER, username and password variables.")
         exit(1)
-		
+
     # put the ip address or dns of your apic-em CONTROLLER in this url
     url = "https://" + CONTROLLER + "/api/v1/ticket"
 
@@ -43,7 +43,7 @@ def getTicket():
 
     # parse the json to get the service ticket
     ticket = r_json["response"]["serviceTicket"]
-    
+
     return ticket
 
 
@@ -58,7 +58,7 @@ def getTopology(ticket):
     if api_call == None:
         print("Please assign a function call to variable api_call.")
         exit(1)
-		
+
     # URL for topology REST API call to get list of existing devices on the
     # network, and build topology
     url = "https://" + CONTROLLER + "/api/v1" + api_call
@@ -124,7 +124,7 @@ def get_roomID():
     r_json = response.json()
 
     for item in r_json["items"]:
-        print("Title " + item["title"])
+        print("Title " + item["title"].encode("ascii", errors="backslashreplace").decode("ascii"))
         print("Room ID " + item["id"] + "\n\n")
         user_input = input(
             "Is this the room you are looking for to post?[y/n] ")
@@ -135,7 +135,7 @@ def get_roomID():
 
 
 #Posts message to the passed in Spark room.
-def post_spark(text, room_id):    
+def post_spark(text, room_id):
     # API Call to for messages
     api_call = "messages"
 
