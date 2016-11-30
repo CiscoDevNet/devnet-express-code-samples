@@ -1,9 +1,9 @@
 food={"vegetables":["carrots","kale","cucumber","tomato"]}
-
+print(food["vegetables"][2])
 
 cars={"sports":{"Porsche":"Volkswagon","Viper":"Dodge","Corvette":"Chevy"}}
 
-
+print(cars["sports"]["Porsche"])
 
 dessert={"iceCream":["Rocky-Road","strawberry","Pistachio-Cashew","Pecan-Praline"]}
 
