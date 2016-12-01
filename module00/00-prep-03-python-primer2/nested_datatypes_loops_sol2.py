@@ -6,9 +6,9 @@ for hungry in food["desserts"]:
 
 cars={"sports":{"Volkswagon":"Porsche","Dodge":"Viper","Chevy":"Corvette"},"classic":{"Mercedes-Benz":"300SL","Toyota":"2000GT","Lincoln":"Continental"}}
 for auto in cars["sports"]:
-	print("My favorite sports car is " + cars["sports"][auto])
+	print("My favorite sports car make and model is the " + auto + " " + cars["sports"][auto])
 for auto in cars["classic"]:
-	print("My favorite classic car is " + cars["classic"][auto])
+	print("My favorite classic car make and model is the " + auto + " " + cars["classic"][auto])
 
 dessert={"iceCream":["Rocky Road","strawberry","Pistachio Cashew","Pecan Praline"]}
 for yummy in dessert["iceCream"]:
@@ -16,4 +16,4 @@ for yummy in dessert["iceCream"]:
 
 soup={"soup":{"tomato":"healthy","onion":"bleh!","vegetable":"good for you"}}
 for tastey in soup["soup"]:
-	print("This soup is " + soup["soup"][tastey])
+	print("This " + tastey + " soup is " + soup["soup"][tastey])
