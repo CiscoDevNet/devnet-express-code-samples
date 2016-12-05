@@ -130,7 +130,7 @@ def get_roomID():
     r_json = response.json()
 
     for item in r_json["items"]:
-        print("Title " + item["title"].encode("ascii", errors="replace").decode("ascii"))
+        print("Title " + item["title"].encode("ascii", errors="backslashreplace").decode("ascii"))
         print("Room ID " + item["id"] + "\n\n")
         user_input = input(
             "Is this the room you are looking for to post?[y/n] ")
