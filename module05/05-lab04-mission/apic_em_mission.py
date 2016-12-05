@@ -13,6 +13,12 @@ CONTROLLER = None
 # MISSION: Assign your authentication token obtained from Spark's Developer page
 AUTH = None
 
+# Users should use Python3; but Python2 will work with this fix
+try:
+    input = raw_input
+except NameError:
+    pass
+
 def getTicket():
     # MISSION: Provide the APIC-EM username
     username = None
@@ -124,7 +130,7 @@ def get_roomID():
     r_json = response.json()
 
     for item in r_json["items"]:
-        print("Title " + item["title"].encode("ascii", errors="backslashreplace").decode("ascii"))
+        print("Title " + item["title"].encode("ascii", errors="replace").decode("ascii"))
         print("Room ID " + item["id"] + "\n\n")
         user_input = input(
             "Is this the room you are looking for to post?[y/n] ")
