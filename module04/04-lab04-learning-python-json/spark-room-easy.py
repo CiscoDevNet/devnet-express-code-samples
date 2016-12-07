@@ -1,7 +1,7 @@
 import json
 import requests
 
-accessToken = "Y2UwZTFmOTUtZTM5OS00OWExLTkyNmMtMjUzZTUyYmE3YjgxMTU5ZTBjNzktYjUx" #put your access token here between the quotes.
+accessToken = "" #put your access token here between the quotes.
 
 
 accessToken_hdr = 'Bearer ' + accessToken

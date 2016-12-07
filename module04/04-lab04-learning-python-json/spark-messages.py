@@ -1,7 +1,7 @@
 import json
 import requests
 
-ACCESS_TOKEN = "ZGM5NWJhYTAtYjVlYy00NmMxLTgxN2MtYmM3NzMxMWM2YWI4OTE4MzY2NDAtYmNk" #put your access token here between the quotes.
+ACCESS_TOKEN = "" #put your access token here between the quotes.
 ROOM_NAME= "Brett's room"
 MESSAGE= "My New Message!!!"
 
