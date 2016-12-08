@@ -49,7 +49,7 @@ def get_tropo_app_id(tropo_api,app_name, tropo_user, tropo_pass):
 def get_tropo_phone_number(tropo_api, tropo_app_id, tropo_user, tropo_pass):
 	phone_num=None
 	# Content type must be included in the header
-	#header = {"content-type": "application/json"}
+	header = {"content-type": "application/json"}
 	# Create the URI string for our Tropo application
 	url = "{api}{address}{app}{addr}".format(api=tropo_api,
 											address="/applications/",
