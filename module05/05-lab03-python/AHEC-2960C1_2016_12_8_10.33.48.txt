@@ -1,0 +1,212 @@
+
+Building configuration...
+
+Current configuration : 8228 bytes
+!
+! Last configuration change at 18:29:47 UTC Tue Jul 5 2016
+! NVRAM config last updated at 18:29:53 UTC Tue Jul 5 2016
+!
+version 15.2
+service config
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname AHEC-2960C1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+username xxxxxx
+no aaa new-model
+system mtu routing 1500
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crytpo pki xxxxxxx
+ revocation-check none
+!
+crytpo pki xxxxxxx
+ enrollment url http://172.28.97.203:80/ejbca/publicweb/apply/scep/sdnscep
+ fqdn Switch
+ subject-name CN=WS-C2960C-8PC-L_FOC1637Y3FJ_sdn-network-infra-iwan
+ revocation-check crl
+rsakeypair xxxxxxxx
+ auto-enroll 80 regenerate
+!
+!
+certificate xxxxxxxxx
+certificate xxxxxxxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+quit
+certificate xxxxxxxxx
+certificate xxxxxxxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+quit
+certificate xxxxxxxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+xxxx  xxxxx  xxxx  xxxx  xxxx
+quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+ip tftp source-interface Vlan1
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ description Connected to Uplink Router
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address dhcp
+!
+ip http server
+ip http secure-server
+!
+!
+snmp-server xxxxxxxx
+snmp-server xxxxxxxx
+!
+!
+line con 0
+ exec-timeout 0 0
+line vty 0 4
+ exec-timeout 0 0
+ privilege level 15
+password xxxxxxxx
+login xxxxxx
+ transport input telnet
+line vty 5 15
+ exec-timeout 0 0
+ privilege level 15
+password xxxxxxxx
+login xxxxxx
+ transport input telnet
+!
+ntp server 172.28.97.203
+!
+pnp profile pnp-zero-touch
+ transport https ipv4 172.28.97.203 port 443
+end
+
