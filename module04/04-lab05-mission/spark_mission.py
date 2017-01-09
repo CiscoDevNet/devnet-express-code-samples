@@ -3,9 +3,9 @@ import sys
 import requests
 
 #MISSION: FILL IN THE REQUESTED DETAILS
-ACCESS_TOKEN = None #put your access token between the quotes
-ROOM_NAME = None #give the room you will create a name
-YOUR_MESSAGE = None  #put the message that you will post to the room
+ACCESS_TOKEN 	= None #Replace None with your access token. Shroud with quotes.
+ROOM_NAME		= None #Replace None with the name of the room to be created. Shroud with quotes.
+YOUR_MESSAGE 	= None #Replace None with the message that you will post to the room. Shroud with quotes.
 
 
 #sets the header to be used for authentication and data format to be sent.
@@ -16,15 +16,14 @@ def setHeaders():
 
 	
 # creates a new room and returns the room id.
-# Mission:  Add code to parse and return the room id
 def createRoom(the_header,room_name):
 	roomInfo = {"title":room_name}
 	uri = 'https://api.ciscospark.com/v1/rooms'
-	resp = requests.post(uri, data=roomInfo, headers=the_header)
+	resp = requests.post(uri, json=roomInfo, headers=the_header)
 	var = resp.json()
 	print("createRoom JSON: ", var)	
-	#MISSION: ADD CODE HERE TO PARSE AND RETURN THE ROOM ID.	
-	return ("put your code here to parse room id from the var variable.")
+	#MISSION: REPLACE None WITH CODE THAT PARSES AND RETURNS THE ROOM ID.	
+	return(None)
 	
 # adds a new member to the room.  Member e-mail is test@test.com
 def addMembers(the_header,roomId):
@@ -48,8 +47,8 @@ def getRoomInfo(the_header,roomId):
 		sys.exit("Please add the uri call to get room details.  See the Spark API Ref Guide")
 	resp = requests.get(uri, headers=the_header)
 	print("Room Info: ",resp.text)
-	resp = resp.json
-	print("put your code here to parse the resp variable and show room details")
+	resp = resp.json()
+	print("MISSION: Please add code to parse and display details about the room.")
 
 
 if __name__ == '__main__':
@@ -58,10 +57,11 @@ if __name__ == '__main__':
 	header=setHeaders()
 	#passing the ROOM_NAME for the room to be created
 	room_id=createRoom(header,ROOM_NAME) 
+	if room_id == None:
+		sys.exit("Please check that function createRoom returns the room ID value.")
 	#passing roomId to members function here to add member to the room.
 	addMembers(header,room_id)   
 	#passing roomId to message function here to Post Message to a room.
 	postMsg(header,room_id,YOUR_MESSAGE)
 	#MISSION: ADD FUNCTION CALL getRoomInfo(header,room_id)
-    
-    
+	print("MISSION: ADD FUNCTION CALL getRoomInfo(header,room_id)")

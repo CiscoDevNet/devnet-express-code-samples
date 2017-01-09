@@ -24,7 +24,8 @@ response = requests.post(virl_url, auth=(username, password), params=payload, da
 
 # Check to see if the response code is 200.
 # If true, print "Simulation started successfully"
-
 if response.status_code == 200:
     print("Simulation started successfully")
     print("Your simulation's name is " + response.text)
+else:
+	print("Simulation not started. Status ",response.status_code)

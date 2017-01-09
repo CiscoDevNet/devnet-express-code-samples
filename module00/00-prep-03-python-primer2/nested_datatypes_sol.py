@@ -10,14 +10,14 @@ print(strDes + food["desserts"][1])
 print(strDes + food["desserts"][2])
 
 cars={"sports":{"Volkswagon":"Porsche","Dodge":"Viper","Chevy":"Corvette"},"classic":{"Mercedes-Benz":"300SL","Toyota":"2000GT","Lincoln":"Continental"}}
-strSport = "My favorite sports car is a "
-strClassic = "My favorite classic car is a "
-print(strSport + cars["sports"]["Dodge"])
-print(strSport + cars["sports"]["Chevy"])
-print(strSport + cars["sports"]["Volkswagon"])
-print(strClassic + cars["classic"]["Mercedes-Benz"])
-print(strClassic + cars["classic"]["Toyota"])
-print(strClassic + cars["classic"]["Lincoln"])
+strSport = "My favorite sports car is a"
+strClassic = "My favorite classic car is a"
+print(strSport + " Dodge " + cars["sports"]["Dodge"])
+print(strSport + " Chevy " + cars["sports"]["Chevy"])
+print(strSport + " Volkswagon " + cars["sports"]["Volkswagon"])
+print(strClassic + " Mercedes-Benz " + cars["classic"]["Mercedes-Benz"])
+print(strClassic + " Toyota " + cars["classic"]["Toyota"])
+print(strClassic + " Lincoln " + cars["classic"]["Lincoln"])
 
 
 dessert={"iceCream":["Rocky Road","strawberry","Pistachio Cashew","Pecan Praline"]}
@@ -29,7 +29,6 @@ print(strCream + dessert["iceCream"][3])
 
 
 soup={"soup":{"tomato":"healthy","onion":"bleh!","vegetable":"good for you"}}
-strSoup = "This soup is "
-print(strSoup + soup["soup"]["tomato"])
-print(strSoup + soup["soup"]["onion"])
-print(strSoup + soup["soup"]["vegetable"])
+print("This tomato soup is " + soup["soup"]["tomato"])
+print("This onion soup is " + soup["soup"]["onion"])
+print("This vegetable soup is " + soup["soup"]["vegetable"])

@@ -5,6 +5,7 @@ for f in var["donut"]["flavors"]:
 	print(f, end=" ")
 print()
 print()
+
 var1={"type":"donut","flavors":{"flavor":[{"type":"chocolate","id":1001}, {"type":"glazed","id":1002},{"type":"sprinkled","id":1003}]}}
 print("Id: " + str(var1["flavors"]["flavor"][0]["id"]) + " type: " + var1["flavors"]["flavor"][0]["type"])
 for f in var1["flavors"]["flavor"]:

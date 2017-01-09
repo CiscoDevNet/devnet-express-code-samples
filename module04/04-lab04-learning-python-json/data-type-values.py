@@ -6,4 +6,5 @@ print (my_tuple[1])
 
 
 my_dict={"red":1,"green":2}
-print(my_dict["green"])
+print(my_dict["green"],my_dict["red"])
+print(my_dict["red"])
