@@ -41,7 +41,8 @@ def postMsg(the_header,roomId,message):
 
 #MISSION: WRITE CODE TO RETRIEVE AND DISPLAY DETAILS ABOUT THE ROOM.
 def getRoomInfo(the_header,roomId):
-	print("In function getRoomInfo")		
+	print("In function getRoomInfo")
+	#MISSION: Replace None in the uri variable with the Spark REST API call	
 	uri = None
 	if uri == None:
 		sys.exit("Please add the uri call to get room details.  See the Spark API Ref Guide")
