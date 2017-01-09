@@ -1,9 +1,9 @@
 import json
 import requests
 
-ACCESS_TOKEN = "" #put your access token here between the quotes.
-ROOM_NAME= "Brett's room"
-MESSAGE= "My New Message!!!"
+ACCESS_TOKEN = "" #put your access token between the quotes.
+ROOM_NAME    = "" #put the name of a room to which you belong between the quotes.
+MESSAGE      = "" #put your message between the quotes.
 
 
 def setHeaders():         
