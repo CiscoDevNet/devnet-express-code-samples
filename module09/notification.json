@@ -1,0 +1,34 @@
+{
+  "name": "mjf_movement_<ADD_POD_ID>",
+  "userId": "learning",
+  "rules": [
+    {
+      "conditions": [
+        {
+          "condition": "movement.distance > 20"
+        },
+        {
+          "condition": "movement.hierarchy == DevNetCampus>DevNetBuilding>DevNetZone"
+        },
+        {
+          "condition": "movement.deviceType == client"
+        }
+      ]
+    }
+  ],
+  "subscribers": [
+    {
+      "receivers": [
+        {
+          "uri": "<ADD_NGROK_URI>:80",
+          "messageFormat": "JSON",
+          "qos": "AT_MOST_ONCE"
+        }
+      ]
+    }
+  ],
+  "enabled": true,
+  "enableMacScrambling": true,
+  "macScramblingSalt": "listening",
+  "notificationType": "Movement"
+}
