@@ -19,15 +19,15 @@ def check_py():
     if os_system() == "Windows":
         try:
             py_ver = subprocess.check_output(
-                "py -4 -V").decode('UTF-8').split("\r\n")[0]
-            print("Script detected " + py_ver +
+                "py -3 -V").decode('UTF-8').splitlines()[0]
+            print("Script has detected " + py_ver +
                   " version present on the machine.")
         except:
             print("Script could not detect Python 3 on the machine.\n"
                   "Go to https://www.python.org/downloads/ page and download latest Python 3 version.")
     else:
         try:
-            py_ver = subprocess.check_output(["python3", "-V"])
+            py_ver = subprocess.check_output(["python3", "-V"]).decode('UTF-8').splitlines()[0]
             print("Script detected " + py_ver +
                   " version present on the machine.")
         except:
@@ -37,7 +37,7 @@ def check_py():
 
 def check_modules():
 
-    necessary_modules = ["requests", "ncclient", "netaddr"]
+    necessary_modules = ["requests", "ncclient", "netaddr", "pyang"]
     installed_packages_list = sorted(["%s" % (i.key)
                                       for i in pip.get_installed_distributions()])
 
