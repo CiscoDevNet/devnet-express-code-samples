@@ -68,16 +68,19 @@ def ngrok():
         return True
     else:
         print("Checking if ngrok is present in UNIX PATH folder...")
-        check_ngrok = subprocess.check_output(
-            ["ls -al /home/cisco/Code/mycode/bin | grep ngrok"], shell=True).decode("utf-8")
-        if "x" in check_ngrok:
-            print("Success!")
-            return True
-        else:
+        try:
+            check_ngrok = subprocess.check_output(
+                ["ls -al /home/cisco/Code/mycode/bin | grep ngrok"], shell=True).decode("utf-8")
+            if "x" in check_ngrok:
+                print("Success!")
+                return True
+        except subprocess.CalledProcessError as e:
             print("ngrok was not found.")
             print("Downloading ngrok for UNIX OS from website...")
             set_ngrok = subprocess.Popen(
-                ["wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip ngrok-stable-linux-amd64.zip && mv ngrok /home/cisco/Code/mycode/bin"], shell=True)
+                ["wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip " \
+                 "&& unzip ngrok-stable-linux-amd64.zip " \
+                 "&& mv ngrok /home/cisco/Code/mycode/bin"], shell=True)
             while set_ngrok.poll() is None:
                 continue
             check_ngrok = subprocess.check_output(
