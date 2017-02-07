@@ -5,6 +5,14 @@ from pprint import pprint
 import requests
 import json
 import sys
+import subprocess
+import platform
+import zipfile
+import logging
+import time
+import os
+from virl import start_sim
+from virl import stop_sim
 # Attempt to import flask module
 try:
     from flask import Flask
@@ -12,8 +20,10 @@ try:
 # If fails attempt to install the module
 except:
     try:
-        import pip
-        pip.main(['install', "flask"])
+        if platform.system() == "Windows":
+            flask_install = subprocess.check_output("pip3 install Flask")
+        else:
+            flask_install = subprocess.check_output(["pip3 install Flask"], shell=True)
         from flask import Flask
         from flask import request
         print("Flask was successfully imported")
@@ -22,14 +32,9 @@ except:
               "Try to run the script with elevated privileges.")
         print(e)
         exit()
-import subprocess
-import time
-import os
-from virl import start_sim
-from virl import stop_sim
-import platform
-import zipfile
-import logging
+
+
+
 
 ## Define logging parameters
 #log = logging.getLogger('VIRL')
@@ -51,10 +56,7 @@ headers = {
 
 
 def ngrok():
-    num = 0
     if platform.system() == "Windows":
-        num+=1
-        print(num)
         print("Downloading ngrok for Windows OS from website...")
         win_ngrok = requests.get(
             "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip")
@@ -67,8 +69,8 @@ def ngrok():
             print("Success!")
         return True
     else:
-        print("Checking if ngrok is present in UNIX PATH folder...")
         try:
+            print("Checking if ngrok is present in UNIX PATH folder...")
             check_ngrok = subprocess.check_output(
                 ["ls -al /home/cisco/Code/mycode/bin | grep ngrok"], shell=True).decode("utf-8")
             if "x" in check_ngrok:
