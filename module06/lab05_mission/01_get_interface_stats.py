@@ -135,6 +135,7 @@ def main():
         # Make NETCONF connection
         netconf = get_netconf(FILE)
 
+        # PREREQ: perform a `pip install xmltodict` in the virtualenv
         # Create an Python Ordered Dict object containing the interface details
         interface = xmltodict.parse(netconf.xml)["rpc-reply"]["data"]["interfaces-state"]["interface"]
     except: 
