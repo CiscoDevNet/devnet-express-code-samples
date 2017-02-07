@@ -19,7 +19,7 @@ def getRooms(theHeader):
 
 def findRoom(roomList,name):
 	roomId=0
-	for room in rooms["items"]:	
+	for room in roomList["items"]:	
 		if room["title"] == name:
 			roomId=room["id"]
 			break
