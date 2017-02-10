@@ -179,6 +179,8 @@ def handle_text(text, filename=None):
                 "Please make sure provided VIRL file exist on local HDD!"
     if text.lower().startswith('list'):
         result = virl_files()
+    if text.lower().startswith('check virl'):
+        result = check_virl()
     if result == None:
         result = "I did not understand your request. Please type `Help me` to see what I can do"
     return result
@@ -260,15 +262,43 @@ def virl_files():
     for file in os.listdir("./sims/"):
         if file.endswith(".virl"):
             num += 1
-            contents += str(num) + ". "*5 + str(file) + "<br/>"
+            contents += str(num) + ". " + str(file) + "<br/>"
             if file_name == None:
                 file_name = file
     if num == 0:
         return "**No VIRL files are present on local HDD.<br/>" \
             "Use `run` command to upload a file and run it."
     return "**Found " + str(num) + " VIRL file(s) on local HDD**.<br/>" + contents + \
-        "**Note:** You can say `start " + file_name + \
+        "> **Note:** You can say `start " + file_name + \
         "` and I will start the simulation for you."
+
+def check_virl():
+
+    # Combine the url and the API call
+    URL = "http://198.18.134.1:19399/simengine/rest/list"
+
+    headers = {'content-type': 'text/xml'}
+
+    # Make a request call with method get to the VIRL server
+    response = requests.get(
+        URL, auth=("guest", "guest"), headers=headers).json()
+
+    # Print how many active simulations were found.
+    if len(response["simulations"]) == 0:
+        message = "There are no running simulations on VIRL"
+        return message
+    else:
+        message = ("**VIRL reports " +
+          str(len(response["simulations"])) + " active simulation(s).**<br/>")
+        sim_name = None
+        # Iterate over the response and print each simulation to the user.
+        # If user recognizes the simulation return it.
+        for i, sim in enumerate(response["simulations"]):
+            if not sim_name:
+                sim_name = sim
+            message += str(i+1) + ". "+ sim + "<br/>"
+        message += "> **Note:** You can say `stop " + sim_name + "` and I will stop the simulation for you."
+    return message
 
 
 app = Flask(__name__)
@@ -303,7 +333,10 @@ def spark_webhook():
                 URL + '/messages/{0}'.format(webhook['data']['id']))
             in_message = result.get('text', '')
             print("Received " + in_message + " from spark. Processing...")
-            in_message = in_message.replace(bot_name.lower() + " ", '')
+            try:
+                in_message = in_message.replace(bot_name.split(" ")[0] + " ", "")
+            except:
+                in_message = in_message.replace(bot_name.lower() + " ", '')
             if filename != None:
                 msg = handle_text(in_message, filename=filename)
             else:
