@@ -9,10 +9,9 @@ VIRL_URL = "http://198.18.134.1"
 USERNAME = "guest"
 PASSWORD = "guest"
 
+
 def start_sim(sim_file):
-    '''
-    This function will start a simulation using provided .virl file
-    '''
+    """This function starts a simulation using the provided .virl file."""
     print("\nStarting simulation...\n")
 
     # Simulation start URL against which the API call will be placed
@@ -20,7 +19,7 @@ def start_sim(sim_file):
     simulation_start_url = VIRL_URL + ":19399" + simulation_start_api
 
     # Open .virl file and assign it to the variable
-    virl_file = open("./sims/"+sim_file, 'rb')
+    virl_file = open("./sims/" + sim_file, 'rb')
 
     # Parameter which will be passed to the server with the API call
     simulation_name = sim_file.split('.')[0]
@@ -38,11 +37,9 @@ def start_sim(sim_file):
     else:
         return False
 
-def stop_sim(sim_id):
-    '''
-    This function will stop specified simulation
-    '''
 
+def stop_sim(sim_id):
+    """This function will stop specified simulation."""
     # Stop URL against which the API call will be placed
     stop_api = "/simengine/rest/stop"
     stop_url = VIRL_URL + ":19399" + stop_api + "/" + sim_id
@@ -60,10 +57,7 @@ def stop_sim(sim_id):
 
 
 def main():
-    '''
-    This function will start functions created above in desired order
-    '''
-
+    """This function will start functions created above in desired order."""
     # start start_sim(sim_file) function and assign the result to the variable
     simulation = start_sim('virl_topo.virl')
 
