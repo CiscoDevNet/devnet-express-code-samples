@@ -28,7 +28,7 @@ def main():
         # print all NETCONF capabilities
         print('***Here are the Remote Devices Capabilities***')
         for capability in m.server_capabilities:
-            print(capability)
+            print(capability.split('?')[0])
 
 if __name__ == '__main__':
     sys.exit(main())
