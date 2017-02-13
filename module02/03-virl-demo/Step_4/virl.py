@@ -64,9 +64,8 @@ def main():
     This function will start functions created above in desired order
     '''
 
-    # start start_sim(url, username, password) function and assign the result
-    # to the variable
-    simulation = start_sim(VIRL_URL, USERNAME, PASSWORD)
+    # start start_sim(sim_file) function and assign the result to the variable
+    simulation = start_sim('virl_topo.virl')
 
     # Print a message asking user to verify that all nodes have an [ACTIVE -
     # REACHABLE] state
@@ -81,35 +80,19 @@ def main():
     # While loop will run infinitely until user confirms that all nodes are
     # active and reachable
     while True:
-        user_input = input(
-            "\n\n\nAre all nodes in active and reachable state?(y/n)[n] ")
-        if user_input.lower() == 'y' or user_input.lower() == 'yes':
+        user_input = raw_input("\n\n\nAre all nodes in active and reachable state?(y/n)[n] ")
+        if user_input.lower().strip() == 'y' or user_input.lower().strip() == 'yes':
             break
         else:
             print(
                 "\nOkay! Please wait until the nodes state changes to desired value")
-
-    # start packet_capture(url, username, password, sim) function
-    packet_capture(VIRL_URL, USERNAME, PASSWORD, simulation)
-
-    # While loop will run infinitely until user confirms that he/she
-    # downloaded the .pcap file
-    while True:
-        user_input = input(
-            "\n\n\nWere you able to download .pcap file from VIRL UWM page?(y/n)[n] ")
-        if user_input.lower() == 'y' or user_input.lower() == 'yes':
-            break
-        else:
-            print(
-                "\nOkay! Go to VIRL UWM page and download the file. \n\
-                When you are ready, come back to terminal screen and answer the question again")
 
     # Notify user that simulation will be stopped next
     print(
         "\nScript will now stop the node. You should see appropriate message briefly.\n")
 
     # start stop_simulation(url, username, password, sim) function
-    stop_simulation(VIRL_URL, USERNAME, PASSWORD, simulation)
+    stop_sim(simulation)
 
 
 # Check if this python script has been run as a standalone program, if
