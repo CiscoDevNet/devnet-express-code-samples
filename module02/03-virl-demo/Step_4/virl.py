@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Import necessary modules
 import requests
 
