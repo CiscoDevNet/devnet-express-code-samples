@@ -3,9 +3,9 @@ import sys
 import requests
 
 #MISSION: FILL IN THE REQUESTED DETAILS
-ACCESS_TOKEN 	= None #Replace None with your access token. Shroud with quotes.
-ROOM_NAME		= None #Replace None with the name of the room to be created. Shroud with quotes.
-YOUR_MESSAGE 	= None #Replace None with the message that you will post to the room. Shroud with quotes.
+ACCESS_TOKEN 	= "NDQyZjU1NmQtMzc4Ni00YzA2LThkMzctNTE4ZGJmYTJlOThkY2IwMzVmMmEtOWM1" #Replace None with your access token. Shroud with quotes.
+ROOM_NAME		= "My Room" #Replace None with the name of the room to be created. Shroud with quotes.
+YOUR_MESSAGE 	= "Room with a view" #Replace None with the message that you will post to the room. Shroud with quotes.
 
 
 #sets the header to be used for authentication and data format to be sent.
@@ -26,7 +26,7 @@ def findRoom(the_header,room_name):
 			print()
 			print("findRoom JSON: ", room)	
 			print("MISSION: findRoom: REPLACE None WITH CODE THAT PARSES JSON TO ASSIGN ROOM ID VALUE TO VARIABLE roomId")
-			roomId=None
+			roomId=room["id"]
 			break	
 	return(roomId)
 	
@@ -41,7 +41,7 @@ def createRoom(the_header,room_name):
 		print()
 		print("createRoom JSON: ", var)	
 		print("MISSION: createRoom: REPLACE None WITH CODE THAT PARSES JSON TO ASSIGN ROOM ID VALUE TO VARIABLE roomId.")		
-		roomId=None		
+		roomId=var["id"]	
 	return(roomId)
 	
 # adds a new member to the room.  Member e-mail is test@test.com
@@ -64,13 +64,15 @@ def postMsg(the_header,roomId,message):
 def getRoomInfo(the_header,roomId):
 	print("In function getRoomInfo")
 	#MISSION: Replace None in the uri variable with the Spark REST API call	
-	uri = None
+	uri = "https://api.ciscospark.com/v1/rooms/" + roomId
 	if uri == None:
 		sys.exit("Please add the uri call to get room details.  See the Spark API Ref Guide")
 	resp = requests.get(uri, headers=the_header)
 	print("Room Info: ",resp.text)
 	resp = resp.json()
 	print("MISSION: Add code to parse and display details about the room.")
+	for item in resp:
+		print (item, resp[item])
 
 
 if __name__ == '__main__':
@@ -87,3 +89,4 @@ if __name__ == '__main__':
 	postMsg(header,room_id,YOUR_MESSAGE)
 	print()
 	print("MISSION: ADD FUNCTION CALL getRoomInfo(header,room_id)")
+	getRoomInfo(header,room_id)
