@@ -79,7 +79,7 @@ def main():
     # While loop will run infinitely until user confirms that all nodes are
     # active and reachable
     while True:
-        user_input = raw_input("\n\n\nAre all nodes in active and reachable state?(y/n)[n] ")
+        user_input = input("\n\n\nAre all nodes in active and reachable state?(y/n)[n] ")
         if user_input.lower().strip() == 'y' or user_input.lower().strip() == 'yes':
             break
         else:
@@ -90,7 +90,7 @@ def main():
     print(
         "\nScript will now stop the node. You should see appropriate message briefly.\n")
 
-    # start stop_simulation(url, username, password, sim) function
+    # start stop_simulation(sim) function
     stop_sim(simulation)
 
 
