@@ -13,6 +13,12 @@ CONTROLLER = None
 # MISSION: Assign your authentication token obtained from Spark's Developer page
 AUTH = None
 
+# Users should use Python3; but Python2 will work with this fix
+try:
+    input = raw_input
+except NameError:
+    pass
+
 def getTicket():
     # MISSION: Provide the APIC-EM username
     username = None
