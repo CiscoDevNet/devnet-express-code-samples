@@ -23,7 +23,7 @@ def rooms(the_header):
 
 
 # creates a new room and returns the room id.
-def createRoom(the_header,room_name):
+def createRoom(the_header, room_name):
 	roomInfo = {"title": room_name}
 	uri = 'https://api.ciscospark.com/v1/rooms'
 	resp = requests.post(uri, json=roomInfo, headers=the_header)
@@ -34,8 +34,8 @@ def createRoom(the_header,room_name):
 
 
 # adds a new member to the room.  Member e-mail is test@test.com
-def addMembers(the_header,roomId):
-	member = {"roomId":roomId,"personEmail": "test@test.com", "isModerator": False}
+def addMembers(the_header, roomId):
+	member = {"roomId": roomId, "personEmail": "test@test.com", "isModerator": False}
 	uri = 'https://api.ciscospark.com/v1/memberships'
 	resp = requests.post(uri, json=member, headers=the_header)
 	print("addMembers JSON: ", resp.json())
