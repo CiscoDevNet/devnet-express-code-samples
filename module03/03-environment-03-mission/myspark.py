@@ -50,6 +50,8 @@ def spark_get_room_id(token, name):
             if uri:
                 uri = uri.get('url', None)
         else:
+            print('Reponse from Spark: ' + str(r.status_code))
+            print('Your connection to Spark failed. Check the Spark Authorization Token.')
             uri = None
     return None
 
