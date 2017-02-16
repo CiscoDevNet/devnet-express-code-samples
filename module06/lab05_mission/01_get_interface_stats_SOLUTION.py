@@ -12,7 +12,7 @@ import json
 
 # MISSION: Assign your authentication token obtained from Spark's Developer page
 AUTH = None
-# MISSION: Fill in the Name of the Room in which your message will be posted.  
+# MISSION: Fill in the Name of the Room in which your message will be posted.
 ROOM_NAME = None
 
 # the variables below assume the user is leveraging the
@@ -49,7 +49,7 @@ def get_roomID(roomName):
     r_json = response.json()
 
     for item in r_json["items"]:
-        if roomName == item["title"]: 
+        if roomName == item["title"]:
             return(item["id"])
 
 
@@ -86,16 +86,16 @@ def get_netconf(xml_filter):
                          device_params={'name': 'default'},
                          allow_agent=False, look_for_keys=False) as m:
         with open(xml_filter) as f:
-            # MISSION: Replace XXX with the correct NETCONF operation 
+            # MISSION: Replace XXX with the correct NETCONF operation
             return(m.get(f.read()))
 
 
 def create_message(interface):
     """
-    Create a Markdown formated message about interface state
+    Create a Markdown formatted message about interface state
     """
-    # MISSION: Replace XXX with the correct leaf 
-    message = "## Interface Stats: Interface %s \n" % (interface["name"]) 
+    # MISSION: Replace XXX with the correct leaf
+    message = "## Interface Stats: Interface %s \n" % (interface["name"])
     message += "* Speed: %s \n" % (interface["speed"])
     message += "* Status: %s \n" % (interface["oper-status"])
     message += "* MAC Address: %s \n" % (interface["phys-address"])
@@ -120,50 +120,50 @@ def main():
     roomId = get_roomID(ROOM_NAME)
 
     # Mission Step Verification
-    if roomId is None: 
+    if roomId is None:
         print("  FAILED!!!  ")
         sys.exit("Mission Failed")
-    else: 
+    else:
         print(" ")
 
-    
+
     ############################################################
-    # Mission Step 2: Make the NETCONF Connection 
+    # Mission Step 2: Make the NETCONF Connection
     ############################################################
     print("Mission Step 2: Making NETCONF Connection to Router")
-    try: 
+    try:
         # Make NETCONF connection
         netconf = get_netconf(FILE)
 
         # Create an Python Ordered Dict object containing the interface details
         interface = xmltodict.parse(netconf.xml)["rpc-reply"]["data"]["interfaces-state"]["interface"]
-    except: 
+    except:
         print("  FAILED!!! ")
         sys.exit("Mission Failed")
 
     # Mission Step Verification
-    if not interface["name"] == "GigabitEthernet1": 
+    if not interface["name"] == "GigabitEthernet1":
         print("  FAILED!!!  ")
         sys.exit("Mission Failed")
-    else: 
+    else:
         print(" ")
 
 
     ############################################################
-    # Mission Step 3: Create the Spark Message (Markdown Formated)
+    # Mission Step 3: Create the Spark Message (Markdown Formatted)
     ############################################################
-    print("Mission Step 3: Create the Spark Message (Markdown Formated)")
-    try: 
-        message = create_message(interface)    
-    except: 
+    print("Mission Step 3: Create the Spark Message (Markdown Formatted)")
+    try:
+        message = create_message(interface)
+    except:
         print("  FAILED!!! ")
         sys.exit("Mission Failed")
     print(" ")
 
 
-        
+
     ############################################################
-    # Mission Complete: Post to Spark Room 
+    # Mission Complete: Post to Spark Room
     ############################################################
     print("Mission Complete: Post to Spark Room")
     post_spark(message, roomId)
