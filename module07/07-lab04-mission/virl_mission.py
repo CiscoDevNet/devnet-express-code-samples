@@ -142,7 +142,7 @@ def packet_capture(url, username, password, sim):
         if iface != 'management':
             ifaces[str(i)] = iface_response[sim][mission_node][iface]["name"]
             print(
-                str(i) + " " * 17 + iface_response[sim][mission_node][iface]["name"])
+                iface + " " * 17 + iface_response[sim][mission_node][iface]["name"])
 
     # Variable which will hold an interface ID chosen by the user
     mission_iface = ""
