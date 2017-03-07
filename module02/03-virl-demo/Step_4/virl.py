@@ -38,9 +38,12 @@ def start_sim(sim_file):
     if simulation_start_response.status_code == 200:
         print(simulation_start_response.text +
               " simulation has successfully started.\n\n")
-        return simulation_start_response.text
+        return True, simulation_start_response.text
     else:
-        return False
+        error_code = simulation_start_response.status_code
+        error_reason = simulation_start_response.json().get('cause', 'UNKNOWN')
+        print("VIRL returned %s code and failed to start the simulation.\n Reason is %s" % (error_code, error_reason))
+        return False, error_code, error_reason
 
 
 def stop_sim(sim_id):

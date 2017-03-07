@@ -159,10 +159,13 @@ def handle_text(text, filename=None):
         result = "I can't run a non VIRL file. Type `Help Me` to see what I can do"
     elif text.lower().startswith('run') and filename.endswith(".virl"):
         sim_id = start_sim(filename)
-        if sim_id != -1:
-            result = "Simulation %s was successfully started " % sim_id
+        if sim_id[0]:
+            result = ("Simulation `%s` was successfully started.<br/>"\
+                "To access your simulation navigate to [http://198.18.134.1:19400/simulation/guest/%s/](http://198.18.134.1:19400/simulation/guest/%s/) URL</br>"\
+                "Live visualization is accessible via [http://198.18.134.1:19402/?sim_id=%s](http://198.18.134.1:19402/?sim_id=%s) URL" % (sim_id[1],sim_id[1],sim_id[1],sim_id[1],sim_id[1]))
         else:
-            result = "Sorry, but I was not able to start the simulation!"
+            result = ("Something went wrong while I was trying to start the simulation.<br/>" \
+                "VIRL returned %s error code.<br/>Also, VIRL provided a reason which is <br/>**%s**" % (response[1], response[2]))
     if text.lower().startswith('stop') and len(text) > 5:
         response = stop_sim(text.split(" ")[1])
         if response:
@@ -172,11 +175,13 @@ def handle_text(text, filename=None):
                 "Please make sure provided simulation ID is correct!"
     if text.lower().startswith('start') and len(text) > 6:
         response = start_sim(text.split(" ")[1])
-        if response != False:
-            result = "Simulation `" + str(response) + "` was successfully started."
+        if response[0]:
+            result = ("Simulation `%s` was successfully started.<br/>"\
+                "To access your simulation navigate to [http://198.18.134.1:19400/simulation/guest/%s/](http://198.18.134.1:19400/simulation/guest/%s/) URL</br>"\
+                "Live visualization is accessible via [http://198.18.134.1:19402/?sim_id=%s](http://198.18.134.1:19402/?sim_id=%s) URL" % (response[1],response[1],response[1],response[1],response[1]))
         else:
-            result = "Something went wrong while I was trying to start the simulation.\n" \
-                "Please make sure provided VIRL file exist on local HDD!"
+            result = ("Something went wrong while I was trying to start the simulation.<br/>" \
+                "VIRL returned %s error code.<br/>Also, VIRL provided a reason which is <br/>**%s**" % (response[1], response[2]))
     if text.lower().startswith('list'):
         result = virl_files()
     if text.lower().startswith('check virl'):
