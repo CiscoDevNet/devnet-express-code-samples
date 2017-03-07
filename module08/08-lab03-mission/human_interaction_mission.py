@@ -20,7 +20,7 @@ TROPO_USER 		= "brtiller"   # Enter your Tropo user name
 TROPO_PASS 		= "Cisco1a2"   # Enter your Tropo password
 YOUR_NAME  		= "Brett"   # Enter your name
 SPARK_TOKEN     = "N2EwYjBlODItMDZkZi00YjZiLWJkNTktNDU0OTM1ZDQ2MWY1YTRhMWQyMjItOTMw"   # Enter your Spark token
-SPARK_ROOM      = "btRoom"   # Enter the Spark room name that you are a member of to which you will post a message
+SPARK_ROOM      = "My Room"   # Enter the Spark room name that you are a member of to which you will post a message
 
 
 
