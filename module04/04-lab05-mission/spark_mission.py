@@ -3,9 +3,9 @@ import sys
 import requests
 
 #MISSION: FILL IN THE REQUESTED DETAILS
-ACCESS_TOKEN 	= "NDQyZjU1NmQtMzc4Ni00YzA2LThkMzctNTE4ZGJmYTJlOThkY2IwMzVmMmEtOWM1" #Replace None with your access token. Shroud with quotes.
-ROOM_NAME		= "Brett's Room" #Replace None with the name of the room to be created. Shroud with quotes.
-YOUR_MESSAGE 	= "My message" #Replace None with the message that you will post to the room. Shroud with quotes.
+ACCESS_TOKEN 	= None #Replace None with your access token. Shroud with quotes.
+ROOM_NAME		= None #Replace None with the name of the room to be created. Shroud with quotes.
+YOUR_MESSAGE 	= None #Replace None with the message that you will post to the room. Shroud with quotes.
 
 
 #sets the header to be used for authentication and data format to be sent.

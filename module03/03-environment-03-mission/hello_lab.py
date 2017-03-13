@@ -9,9 +9,10 @@ requests.packages.urllib3.disable_warnings()
 
 # We need to know our token and other information.
 # Make sure you either create your own room
-# or provide the name of the common event room
-SPARK_TOKN = 'ZDg0MGIyMWMtYzMxNi00ZWM0LTlkMGUtOWE3ZTczMjc0MGM0YTBkODY5YmMtMDI1'
-SPARK_ROOM = 'Portugal DevNet Express Workshop'
+# or provide the name of the common event room.
+# Replace None with the value
+SPARK_TOKN = None
+SPARK_ROOM = None
 
 # The below URLs, usernames and passwords
 # match the dCloud DNA lab

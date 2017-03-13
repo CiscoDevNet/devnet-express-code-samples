@@ -15,12 +15,12 @@ STATUS_OK = 200
 
 
 #MISSION: fill in the variables below.
-TROPO_APP_NAME	= "bt-india-app" # Your Tropo network application name.  Enter a different name if you named it something else.
-TROPO_USER 		= "brtiller"   # Enter your Tropo user name
-TROPO_PASS 		= "Cisco1a2"   # Enter your Tropo password
-YOUR_NAME  		= "Brett"   # Enter your name
-SPARK_TOKEN     = "N2EwYjBlODItMDZkZi00YjZiLWJkNTktNDU0OTM1ZDQ2MWY1YTRhMWQyMjItOTMw"   # Enter your Spark token
-SPARK_ROOM      = "My Room"   # Enter the Spark room name that you are a member of to which you will post a message
+TROPO_APP_NAME	= "" # Your Tropo network application name.  Enter a different name if you named it something else.
+TROPO_USER 		= ""   # Enter your Tropo user name
+TROPO_PASS 		= ""   # Enter your Tropo password
+YOUR_NAME  		= ""   # Enter your name
+SPARK_TOKEN     = ""   # Enter your Spark token
+SPARK_ROOM      = ""   # Enter the Spark room name that you are a member of to which you will post a message
 
 
 
