@@ -100,12 +100,10 @@ def create_message(interface):
     message += "* Status: %s \n" % (interface["XXX"])
     message += "* MAC Address: %s \n" % (interface["XXX"])
     message += "* Statistics \n"
-    message += "    * Octets In: %s \n" % (interface["XXX"]["XXX"])
-    message += "    * Octets Out: %s \n" % (interface["XXX"]["XXX"])
-    message += "    * Packets In: %s \n" % (interface["XXX"]["XXX"]["#text"])
-    message += "    * Packets Out: %s \n" % (interface["XXX"]["XXX"]["#text"])
-    message += "    * Errors In: %s \n" % (interface["XXX"]["XXX"])
-    message += "    * Errors Out: %s \n" % (interface["XXX"]["XXX"])
+    message += "    * Octets In: %s \n" % (interface["statistics"]["in-octets"])
+    message += "    * Octets Out: %s \n" % (interface["statistics"]["out-octets"])
+    message += "    * Errors In: %s \n" % (interface["statistics"]["in-errors"])
+    message += "    * Errors Out: %s \n" % (interface["statistics"]["out-errors"])
     return(message)
 
 
@@ -124,42 +122,39 @@ def main():
         print("  FAILED!!!  ")
         sys.exit("Mission Failed")
     else:
-        print(" ")
+        print("Spark Room ID is: " + roomId)
+        print("")
 
 
     ############################################################
     # Mission Step 2: Make the NETCONF Connection
     ############################################################
     print("Mission Step 2: Making NETCONF Connection to Router")
-    try:
-        # Make NETCONF connection
-        netconf = get_netconf(FILE)
+    # Make NETCONF connection
+    netconf = get_netconf(FILE)
 
-        # PREREQ: perform a `pip install xmltodict` in the virtualenv
-        # Create an Python Ordered Dict object containing the interface details
-        interface = xmltodict.parse(netconf.xml)["rpc-reply"]["data"]["interfaces-state"]["interface"]
-    except:
-        print("  FAILED!!! ")
-        sys.exit("Mission Failed")
+    # PREREQ: perform a `pip install xmltodict` in the virtualenv
+    # Create an Python Ordered Dict object containing the interface details
+    interface = xmltodict.parse(netconf.xml)["rpc-reply"]["data"]["interfaces-state"]["interface"]
 
     # Mission Step Verification
     if not interface["name"] == "GigabitEthernet1":
         print("  FAILED!!!  ")
         sys.exit("Mission Failed")
     else:
-        print(" ")
+        print("The Interface Details: ")
+        pprint(interface)
+        print("")
 
 
     ############################################################
     # Mission Step 3: Create the Spark Message (Markdown Formatted)
     ############################################################
     print("Mission Step 3: Create the Spark Message (Markdown Formatted)")
-    try:
-        message = create_message(interface)
-    except:
-        print("  FAILED!!! ")
-        sys.exit("Mission Failed")
-    print(" ")
+    message = create_message(interface)
+    print("The message will be: ")
+    print(message)
+    print("")
 
 
 
