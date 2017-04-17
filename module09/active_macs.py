@@ -4,27 +4,25 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from requests.auth import HTTPBasicAuth
 import json
 import base64
-import time
 
 def main():
-    while True:
         try:
             username = 'learning'
             password = 'learning'
-            restURL = 'https://cmxlocationsandbox.cisco.com/api/location/v2/clients/count'
+            restURL = 'https://cmxlocationsandbox.cisco.com/api/location/v2/clients?sortBy=macAddress:ASC'
             request = requests.get(
             url = restURL,
             auth = HTTPBasicAuth(username,password),
             verify=False)
 
-            str_request = request.json()
-            clientcount = str_request['count']
-
-            if clientcount > 70:
-                print (clientcount)
-                print ("Tell Spark it’s more than 70")
-
-            time.sleep(10)
+            macValues=[]
+            jdata = json.loads(request.text)
+            for d in jdata:
+                for key, value in d.items():
+                    if key == "macAddress":
+                        macValues.append(value)
+            print ("Tell Spark it’s macAddresses are: ")
+            print (macValues)
 
         except requests.exceptions.RequestException as e:
             print(e)
