@@ -20,7 +20,7 @@ def main():
                 for key, value in d.items():
                     if key == "macAddress":
                         macValues.append(value)
-            print ("Tell Spark it’s macAddresses are: ")
+
             print (macValues)
 
         except requests.exceptions.RequestException as e:

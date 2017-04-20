@@ -17,8 +17,8 @@ def main():
 
   username = 'learning'
   password = 'learning'
-  restURL1 = 'https://msesandbox.cisco.com:8081/api/location/v1/historylite/clients/'
-  restURL2 = 'https://msesandbox.cisco.com:8081/api/location/v1/compliance/clientcompliance/floor/'
+  restURL1 = 'https://cmxlocationsandbox.cisco.com/api/location/v1/historylite/clients/'
+  restURL2 = 'https://cmxlocationsandbox.cisco.com/api/location/v1/compliance/clientcompliance/floor/'
 
   while True:
 

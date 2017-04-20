@@ -6,7 +6,6 @@ import base64
 import time
 
 def main():
-    while True:
         try:
             username = 'learning'
             password = 'learning'
@@ -19,11 +18,7 @@ def main():
             str_request = request.json()
             clientcount = str_request['count']
 
-            if clientcount > 70:
-                print (clientcount)
-                print ("Tell Spark it’s more than 70")
-
-            time.sleep(10)
+            print (clientcount)
 
         except requests.exceptions.RequestException as e:
             print(e)
