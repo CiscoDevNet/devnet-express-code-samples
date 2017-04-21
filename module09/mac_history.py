@@ -7,7 +7,7 @@ import base64
 
 def main():
   print("********************************************************");
-  print("* Cisco CMX MAC History Python 3 Utility                  *");
+  print("* Cisco CMX MAC History Python 3 Utility               *");
   print("* Please provide the input in the following format     *");
   print("*                                                      *");
   print("* macAddress: 00:00:2a:01:00:06                        *");
