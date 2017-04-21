@@ -51,7 +51,7 @@ def main():
            print(e)
 
        print("----------------------------------------------------------------")
-       print("x, y coordinates: ", x , y)
+       print("x, y coordinates: ", x , ", " , y)
        print("timestamp (lastLocatedTime): "+ chgOn)
        print("map hierarchy string: ", response.text)
        print("----------------------------------------------------------------")
@@ -59,3 +59,33 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+'''
+Response from GET request
+https://<cmx_ip>/api/location/v1/historylite/clients/00:00:2a:01:00:06
+
+{
+  "Data": [
+    {
+      "x": 209.99107,
+      "y": 38.91461,
+      "flr": "723413320329068590",
+      "chgOn": "1492780699608",
+      "s": "1",
+      "ssid": "test",
+      "ap": "00:2b:01:00:02:00",
+      "un": "",
+      "ip": "10.10.20.165",
+      "lat": -999,
+      "long": -999
+    },
+'''
+
+'''
+Response from GET request
+https://<cmx_ip>/api/location/v1/compliance/clientcompliance/floor/00:00:2a:01:00:06
+
+DevNetCampus>DevNetBuilding>DevNetZone>Test 2
+'''
