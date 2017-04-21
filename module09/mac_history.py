@@ -4,15 +4,6 @@ requests.packages.urllib3.disable_warnings()
 from requests.auth import HTTPBasicAuth
 import json
 import base64
-import collections
-
-'''
-Python script "mac_history" prompts for a mac address and retrieves the historical location data for it.
-Copy the python script called mac_history.py from the /module09 folder.
-Run the script using the command $python3 mac_history.py.
-Modify the script to extract the timestamp, coordinates and map hierarchy for each record.
-Put the results in a Set in chronological order, such that a historical path of the client is created.
-'''
 
 def main():
   print("********************************************************");
@@ -28,52 +19,58 @@ def main():
   password = 'learning'
   restURL1 = 'https://cmxlocationsandbox.cisco.com/api/location/v1/historylite/clients/'
 
-  while True:
+  x          = None
+  y          = None
+  chgOn      = None
+  flr        = None
+  macAddress = None
 
-       x          = None
-       y          = None
-       chgOn      = None
-       flr        = None
-       macAddress = None
+  macAddress = input("macAddress: ")
+  try:
+      response = requests.get(
+      url = restURL1 +"/"+ macAddress,
+      auth = HTTPBasicAuth(username,password),
+      verify=False)
 
-       macAddress = input("macAddress: ")
+      json_data = response.json()
 
-       try:
-           response = requests.get(
-           url = restURL1 +"/"+ macAddress,
-           auth = HTTPBasicAuth(username,password),
-           verify=False)
+      ActCount = json_data["Count"] #actual count could be thousands, ie. 3000
+      count = 0
+      l = []
+      while (count < 10):
 
-           json_data = response.json()
+          macAddress= json_data["Macaddress"]
+          x = json_data["Data"][count]["x"]
+          y = json_data["Data"][count]["y"]
+          chgOn = json_data["Data"][count]["chgOn"]
+          flr = json_data["Data"][count]["flr"]
 
-           x = json_data["Data"][0]["x"]
-           y = json_data["Data"][0]["y"]
-           chgOn = json_data["Data"][0]["chgOn"]
-           flr = json_data["Data"][0]["flr"]
-           d = collections.OrderedDict()
-           d['x'] = x
-           d['y'] = y
-           d['chgOn'] = chgOn
-           d['flr'] = flr
+          s = [str(chgOn), str(x), str(y), str(flr)]
+          l.append(s)
 
-           for k, v in d.items():
-               print (k, v)
-
-       except requests.exceptions.RequestException as e:
-           print(e)
+          count = count + 1
 
 
-       print("----------------------------------------------------------------")
-       print("x, y coordinates: ", x , ", " , y)
-       print("timestamp (lastLocatedTime): "+ chgOn)
-       print("floor: ", flr)
-       print("----------------------------------------------------------------")
-       print("\nControl C to Exit");
+      print("----------------------------------------------------------------")
+      print(" Actual Count: ", ActCount, " (only showing 10 events)")
+      print(" Macaddress: ", macAddress)
+      print(" List contains timestamp, xCoordinates, yCoordinates , FloorId")
+      print("----------------------------------------------------------------")
+      for s in l:
+          print(list(s))
+
+
+  except requests.exceptions.RequestException as e:
+      print(e)
+
 
 if __name__ == '__main__':
     main()
 
 '''
+Response from GET request
+https://<cmx_ip>/api/location/v1/historylite/clients/00:00:2a:01:00:06
+
 {
   "Data": [
     {
