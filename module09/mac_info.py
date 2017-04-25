@@ -4,6 +4,7 @@ requests.packages.urllib3.disable_warnings()
 from requests.auth import HTTPBasicAuth
 import json
 import base64
+import time
 
 def main():
   print("********************************************************");
@@ -41,6 +42,7 @@ def main():
            x = json_data["Data"][0]["x"]
            y = json_data["Data"][0]["y"]
            chgOn = json_data["Data"][0]["chgOn"]
+           timestamp = time.ctime(int(chgOn)/1000)
 
            response = requests.get(
            url = restURL2 +"/"+ macAddress,
@@ -52,7 +54,7 @@ def main():
 
        print("----------------------------------------------------------------")
        print("x, y coordinates: ", x , ", " , y)
-       print("timestamp (lastLocatedTime): "+ chgOn)
+       print("timestamp (lastLocatedTime): "+ timestamp)
        print("map hierarchy string: ", response.text)
        print("----------------------------------------------------------------")
        print("\nControl C to Exit");
