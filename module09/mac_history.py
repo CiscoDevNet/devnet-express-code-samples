@@ -4,6 +4,7 @@ requests.packages.urllib3.disable_warnings()
 from requests.auth import HTTPBasicAuth
 import json
 import base64
+import time
 
 def main():
   print("********************************************************");
@@ -43,9 +44,10 @@ def main():
           x = json_data["Data"][count]["x"]
           y = json_data["Data"][count]["y"]
           chgOn = json_data["Data"][count]["chgOn"]
+          timestamp = time.ctime(int(chgOn)/1000)
           flr = json_data["Data"][count]["flr"]
 
-          s = [str(chgOn), str(x), str(y), str(flr)]
+          s = [timestamp, str(x), str(y), str(flr)]
           l.append(s)
 
           count = count + 1
