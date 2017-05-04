@@ -41,6 +41,7 @@ def getTicket():
 
     # Performs a POST on the specified url to get the service ticket
     response = requests.post(url, data=json.dumps(payload), headers=header, verify=False)
+    response.raise_for_status()
 
     print(response)
 
@@ -74,6 +75,7 @@ def getTopology(ticket):
 
     # this statement performs a GET on the specified network device url
     response = requests.get(url, headers=header, verify=False)
+    response.raise_for_status()
 
     # convert data to json format.
     r_json = response.json()
@@ -127,6 +129,7 @@ def get_roomID():
 
     # this statement performs a GET on the specified network device url
     response = requests.get(url, headers=header, verify=False)
+    response.raise_for_status()
     r_json = response.json()
 
     for item in r_json["items"]:
@@ -159,6 +162,7 @@ def post_spark(text, room_id):
     # this statement performs a GET on the specified network device url
     response = requests.post(url, data=json.dumps(
         payload), headers=header, verify=False)
+    response.raise_for_status()
 
     print("\nCheck the Spark Room.  You've just posted a message!")
 

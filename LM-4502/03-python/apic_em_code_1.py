@@ -24,7 +24,9 @@ def get_token(url):
     # Combine URL, API call and parameters variables
     url += api_call
 
-    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False).json()
+    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
 
     # Return authentication token from respond body
     return response["response"]["serviceTicket"]
@@ -40,8 +42,10 @@ def get_device_id(token, url):
 
     # Combine URL, API call and parameters variables
     url += api_call
-	
-    response = requests.get(url, headers=headers, verify=False).json()
+
+    response = requests.get(url, headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
 
     # Iterate over the response and find first device with access role.
     # Return ID number of the first device matching the criteria
@@ -49,7 +53,7 @@ def get_device_id(token, url):
         if item['role'] == 'ACCESS':
             return item['id']
 
-			
+
 def get_config(token, url, id):
 
     # Define API Call. To get specific device's configuration
@@ -62,7 +66,9 @@ def get_config(token, url, id):
     # Combine URL, API call variables
     url += api_call
 
-    response = requests.get(url, headers=headers, verify=False).json()
+    response = requests.get(url, headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
 
     # Create a file in present working directory
     file = open('access_host_1.txt', 'w')

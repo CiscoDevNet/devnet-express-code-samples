@@ -24,12 +24,14 @@ def get_token(url):
     # Combine URL, API call and parameters variables
     url += api_call
 
-    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False).json()
+    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
 
     # Return authentication token from respond body
     return response["response"]["serviceTicket"]
 
-	
+
 def get_device_id(token, url):
 
     # Define API Call
@@ -40,8 +42,10 @@ def get_device_id(token, url):
 
     # Combine URL, API call and parameters variables
     url += api_call
-	
-    response = requests.get(url, headers=headers, verify=False).json()
+
+    response = requests.get(url, headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
 
     # Iterate over the response and find first device with access role.
     # Return ID number of the first device matching the criteria
@@ -49,26 +53,28 @@ def get_device_id(token, url):
         if item['role'] == 'ACCESS':
             return item['id']
 
-			
+
 def get_config(token, url, id):
     #Define API Call. To get specific device's configuration
     #we will need to add device's ID in the API call
     api_call = "/network-device/" + id +"/config"
-	
+
     #Header information
     headers = {"X-AUTH-TOKEN" : token}
-	
+
     # Combine URL, API call variables
     url +=api_call
-	
-    response = requests.get(url, headers=headers, verify=False).json()
-    
+
+    response = requests.get(url, headers=headers, verify=False)
+    response.raise_for_status()
+    response = response.json()
+
 	#Find the hostname in the response body and save it to a hostname variable
     hostname = re.findall('hostname\s(.+?)\s', response['response'])[0]
-    
+
 	#Create a date_time variable which will hold current time
     date_time = datetime.datetime.now()
-    
+
 	#Create a variable which will hold the hostname combined with the date and time
     #The format will be hostname_year_month_day_hour.minute.second
     file_name = hostname + '_' + str(date_time.year) + '_' + str(date_time.month) + '_' + \
@@ -76,14 +82,14 @@ def get_config(token, url, id):
                 '.' + str(date_time.second)
 
     file = open(file_name+'.txt', 'w')
-    
+
 	#Write response body to the file
     file.write(response['response'])
-    
+
 	#Close the file when writing is complete
     file.close()
 
-	
+
 # Assign obtained authentication token to a variable. Provide APIC-EM's
 # URL address
 auth_token = get_token(apic_em_ip)
