@@ -50,7 +50,7 @@ def get_device_id(token, url):
     # Iterate over the response and find first device with access role.
     # Return ID number of the first device matching the criteria
     for item in response['response']:
-        if item['role'] == 'ACCESS':
+        if item['role'] == 'ACCESS' and not item['family'] == 'Unified AP':
             return item['id']
 
 
