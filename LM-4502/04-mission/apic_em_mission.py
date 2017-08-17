@@ -143,7 +143,7 @@ def get_roomID():
             continue
 
 
-#Posts message to the passed in Spark room.
+# Posts message to the passed in Spark room.
 def post_spark(text, room_id):
     # API Call to for messages
     api_call = "messages"
@@ -159,7 +159,7 @@ def post_spark(text, room_id):
         "roomId": room_id,
         "text": '\n'.join(text)
     }
-    # this statement performs a GET on the specified network device url
+    # Perform a POST request to add the APIC-EM topology information to a Spark Space
     response = requests.post(url, data=json.dumps(
         payload), headers=header, verify=False)
     response.raise_for_status()
