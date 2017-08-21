@@ -14,6 +14,12 @@ requests.packages.urllib3.disable_warnings()
 SPARK_TOKN = None
 SPARK_ROOM = None
 
+if not SPARK_TOKN or not SPARK_ROOM:
+    exit("Looks like SPARK_TOKN or SPARK_ROOM variable in hello_lab.py "\
+         "is empty.\nPlease assign appropriate values and run the script again.")
+
+
+
 # The below URLs, usernames and passwords
 # match the dCloud DNA lab
 RESTCONF_URL = '198.18.133.218:8008'
