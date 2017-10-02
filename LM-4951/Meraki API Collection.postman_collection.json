@@ -1,0 +1,224 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Meraki API Collection",
+		"_postman_id": "5507e55d-ade2-081d-0f58-e7af2e494599",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Organizations - Listing",
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/organizations",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Turkcell",
+							"type": "text"
+						}
+					]
+				},
+				"description": "List the organizations this user has access to"
+			},
+			"response": []
+		},
+		{
+			"name": "Networks - List networks in org",
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/organizations/{{organizationId}}/networks",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order",
+							"value": "234234234",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Organizations - Return the inventory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var count = 0;",
+							"var k = \"mac\";",
+							"for (k in jsonData) if (jsonData.hasOwnProperty(k)) count++;",
+							"//count = 0;",
+							"tests[\"Has Devices\"] = count > 0;",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/organizations/{{organizationId}}/inventory",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order",
+							"value": "234234234",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Networks - Return Network Information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var count = 0;",
+							"var k = \"mac\";",
+							"for (k in jsonData) if (jsonData.hasOwnProperty(k)) count++;",
+							"//count = 0;",
+							"tests[\"Has Devices\"] = count > 0;",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/organizations/{{organizationId}}/inventory",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order",
+							"value": "234234234",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Devices - Return Device Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var count = 0;",
+							"var k = \"mac\";",
+							"for (k in jsonData) if (jsonData.hasOwnProperty(k)) count++;",
+							"//count = 0;",
+							"tests[\"Has Devices\"] = count > 0;",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/organizations/{{organizationId}}/inventory",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order",
+							"value": "234234234",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "SSIDs - List the SSIDs in a network",
+			"request": {
+				"url": "https://dashboard.meraki.com/api/v0/networks/{{networkId}}/ssids",
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cisco-Meraki-API-Key",
+						"value": "{{X-Cisco-Meraki-API-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
