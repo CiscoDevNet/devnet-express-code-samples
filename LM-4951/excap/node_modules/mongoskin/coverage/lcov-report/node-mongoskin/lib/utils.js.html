@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-mongoskin/lib/utils.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">node-mongoskin/lib/utils.js</span></h1>
+    <h2>
+        Statements: <span class="metric">98.98% <small>(97 / 98)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">91.49% <small>(43 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(18 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(96 / 96)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">node-mongoskin/lib/</a> &#187; utils.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">143</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-yes">167</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">167</span>
+<span class="cline-any cline-yes">95</span>
+<span class="cline-any cline-yes">95</span>
+<span class="cline-any cline-yes">57</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38</span>
+<span class="cline-any cline-yes">38</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">184</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">78</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*!
+ * mongoskin - utils.js
+ *
+ * Copyright(c) 2011 - 2012 kissjs.org
+ * Copyright(c) 2012 fengmk2 &lt;fengmk2@gmail.com&gt;
+ * MIT Licensed
+ */
+&nbsp;
+"use strict";
+&nbsp;
+/**
+ * Module dependencies.
+ */
+&nbsp;
+var __slice = Array.prototype.slice;
+var EventEmitter = require('events').EventEmitter;
+var constant = require('./constant');
+var STATE_CLOSE = constant.STATE_CLOSE;
+var STATE_OPENNING = constant.STATE_OPENNING;
+var STATE_OPEN = constant.STATE_OPEN;
+&nbsp;
+exports.makeSkinClass = function makeSkinClass(NativeClass, useNativeConstructor) {
+&nbsp;
+  function onError (err, args, name) {
+    var cb = args.pop();
+    if (cb &amp;&amp; typeof cb === 'function') {
+      cb(err);
+    } else {
+      console.error("Error occured with no callback to handle it while calling " + name,  err);
+    }
+  };
+&nbsp;
+  var skinClassName = 'Skin' + NativeClass.name;
+  function SkinClass() {
+    var args = __slice.call(arguments);
+    this._construct_args = args;
+    if(useNativeConstructor &amp;&amp; arguments.length &gt; 0) {
+      args.unshift(null);
+      var ctor = NativeClass.bind.apply(NativeClass, args);
+      this._native = new ctor();
+    } else {
+      this._native = null;
+    }
+    this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(50);
+    this._state = STATE_CLOSE;
+    this._init &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this._init();</span>
+  }
+  SkinClass._class_name = skinClassName;
+&nbsp;
+  function bindSkin(propName) {
+    var fn;
+    var desc = Object.getOwnPropertyDescriptor(NativeClass.prototype, propName);
+    if(!desc) {
+      // console.log('no desc', skinClassName, propName, desc);
+      try{
+        fn = NativeClass.prototype[propName];
+      } catch(e) {}
+    } else {
+      fn = desc.value;
+    }
+    if(typeof fn == 'function') {
+      SkinClass._bindMethod(propName);
+    } else if(desc) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (desc.get) {
+        SkinClass._bindGetter(propName);
+      }
+      if (desc.set) {
+        SkinClass._bindSetter(propName);
+      }
+    // } else {
+    //   this will never be called, so comment it.
+    //   console.log('no desc and no value', skinClassName, propName);
+    }
+  }
+&nbsp;
+  SkinClass._bindMethod = function(propName) {
+    SkinClass.prototype[propName] = function() {
+      var args = __slice.apply(arguments);
+      if (this._state == STATE_OPEN) {
+        this._native[propName].apply(this._native, args);
+      } else {
+        this.open(function(err, p_native) {
+            if (err) {
+              onError(err, args, skinClassName + '.' + propName);
+            } else {
+              p_native[propName].apply(p_native, args);
+            }
+        });
+      }
+      return this;
+    }
+  }
+&nbsp;
+  SkinClass._bindGetter = function(propName) {
+      SkinClass.prototype.__defineGetter__(propName, function() {
+          return this._native &amp;&amp; this._native[propName];// || this['_prop_' + propName];
+      });
+  }
+&nbsp;
+  SkinClass._bindSetter = function(propName) {
+      SkinClass.prototype.__defineSetter__(propName, function(value) {
+          // this['_prop_' + propName] = value;
+          this.open(function(err, p_native) {
+              <span class="missing-if-branch" title="if path not taken" >I</span>if(err) <span class="cstat-no" title="statement not covered" >return onError(err, args, skinClassName + '.' + propName);</span>
+              p_native[propName] = value;
+          });
+      });
+  }
+&nbsp;
+  for(var propName in NativeClass.prototype) {
+    if(propName[0] != '_') bindSkin(propName);
+  }
+&nbsp;
+  SkinClass.prototype.open = function(callback) {
+    switch (this._state) {
+      case STATE_OPEN:
+        callback(null, this._native);
+        break;
+      case STATE_OPENNING:
+        this._emitter.once('open', callback);
+        break;
+      default:
+        this._emitter.once('open', callback);
+        this._state = STATE_OPENNING;
+        var self = this;
+        this._open(function(err, p_native) {
+            if (err) {
+              self._state = STATE_CLOSE;
+            } else {
+              self._state = STATE_OPEN;
+              self._native = p_native;
+            }
+            self._emitter.emit('open', err, p_native);
+        });
+    }
+    return this;
+  }
+&nbsp;
+  SkinClass.prototype.close = function (callback) {
+    if (this._state === STATE_CLOSE) {
+      callback &amp;&amp; callback();
+    } else if (this._state === STATE_OPEN) {
+      this._state = STATE_CLOSE;
+      this._close(callback);
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (this._state === STATE_OPENNING) {
+      var self = this;
+      this._emitter.once('open', function (err, db) {
+          self.close(callback);
+      });
+    }
+    this._native = null;
+    return this;
+  }
+&nbsp;
+  SkinClass.prototype._close = function(callback) {
+    if(this._native.close) {
+      this._native.close(callback)
+    } else if(callback) {
+      callback();
+    }
+  }
+&nbsp;
+  SkinClass.prototype.isOpen = function() {
+    return this._state === STATE_OPEN;
+  }
+&nbsp;
+  return SkinClass;
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Sep 14 2015 15:12:40 GMT-0400 (EDT)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "excap",
+  "version": "1.0.0",
+  "description": "Cisco Meraki Click-through Captive Portal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Cisco",
+    "Meraki",
+    "wifi",
+    "Splash",
+    "Page",
+    "Captive",
+    "Portal",
+    "EXCAP"
+  ],
+  "author": "Cory Guynn",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "connect-mongodb-session": "^1.0.6",
+    "express": "^4.13.3",
+    "express-mongo-rest": "^0.1.1",
+    "express-session": "^1.12.1",
+    "express3-handlebars": "^0.5.2",
+    "mongodb": "^2.0.49",
+    "path": "^0.12.7",
+    "session": "^0.1.0"
+  }
+}

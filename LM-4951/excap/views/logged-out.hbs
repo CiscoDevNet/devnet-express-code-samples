@@ -1,0 +1,35 @@
+
+<div id="content">
+  <div id="container">
+    <div class="header">
+      <div id="icon_cell">
+        <h1>Logged Out!</h1>
+        <p>
+          Total session duration: {{duration.min}} minutes {{duration.sec}} seconds
+        </p>
+      </div>
+    </div>
+
+    <div id="continue">
+      <p>
+        Brought to you by <a href="http://www.internetoflego.com" target="blank">InternetOfLego.com</a>
+      </p>
+      <p>
+        <img class="text-center" src="/img/lego-cafe-building.jpg" style="width:80%; margin:10px;">
+      </p>
+    </div>
+  </div>
+  <div class="footer">
+    <h3>POWERED BY</h3>
+    <img class="text-center" src="/img/cisco-meraki-gray.png" style="width:10%; margin:10px;">
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  $( "#logout" ).click(function() {
+    // window.location.href={{logout_url}};
+    $.get( {{logout_url}}, function( data ) {
+      console.log("logout response" + data);
+  });
+});
+</script>

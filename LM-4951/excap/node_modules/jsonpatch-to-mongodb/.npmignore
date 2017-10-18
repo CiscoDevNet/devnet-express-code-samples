@@ -1,0 +1,5 @@
+.jshintrc
+.jsfmtrc
+.travis.yml
+test/
+examples/

@@ -1,0 +1,102 @@
+<div id="content">
+  <div id="container">
+    <div class="header">
+      <div id="icon_cell">
+      <!--  <img class="text-center" src="/img/barista-lego.jpg" style="width:40%; margin:10px;"> -->
+      </div>
+    </div>
+
+    <div id="continue">
+      <h1>Administration Page</h1>
+
+    </div>
+
+    <div>
+      <p>Sign-on Session Data</p>
+      <table border="1" style="width:100%">
+          <td>record</td>
+          <td>host server</td>
+          <td>ap_name</td>
+          <td>ap_tags</td>
+          <td>client_ip</td>
+          <td>client_mac</td>
+          <td>signon_time</td>
+          <td>success_time</td>
+          {{#each data}}
+
+           <tr>
+             <td >{{@index}}</td>
+             <td width="300">{{session.host}}</td>
+             <td width="300">{{session.ap_name}}</td>
+             <td width="300">{{session.ap_tags}}</td>
+             <td width="300">{{session.client_ip}}</td>
+             <td width="300">{{session.client_mac}}</td>
+             <td width="300">{{session.signon_time}}</td>
+             <td width="300">{{session.success_time}}</td>
+             <!--
+             <td width="300">login_url = {{session.login_url}}</td>
+             <td width="300">logout_url = {{session.logout_url}}</td>
+             <td width="300">continue_url = {{session.continue_url}}</td>
+             <td width="300">success_url = {{session.success_url}}</td>
+           -->
+           </tr>
+         <br>
+         {{/each}}
+      </table>
+    </div>
+
+    <div>
+      <p>Click-through Session Data</p>
+      <table border="1" style="width:100%">
+
+          <td>record</td>
+          <td>node_mac</td>
+          <td>host server</td>
+          <td>client_ip</td>
+          <td>client_mac</td>
+          <td>form</td>
+          <td>splashclick_time</td>
+          <td>splashlogin_time</td>
+          <td>success_time</td>
+
+          {{#each data}}
+          {{#if session.base_grant_url}}
+
+           <tr>
+             <td >{{@index}}</td>
+             <td width="300">{{session.host}}</td>
+             <td width="300">{{session.node_mac}}</td>
+             <td width="300">{{session.client_ip}}</td>
+             <td width="300">{{session.client_mac}}</td>
+             <td width="300">{{session.form}}</td>
+             <!-- example table with custom columns -->
+{{#extend "session.form"}}
+  <th style="width:10%"></th>
+  <th style="width:10%"></th>
+{{/extend}}
+{{#extend "session.form"}}
+  <td style="width:10%"><a class="btn btn-primary btn-block" href="/applications/edit/{{this._id}}">Edit</a></td>
+  <td style="width:10%"><a class="btn btn-danger btn-block" href="/applications/delete/{{this._id}}">Delete</a></td>
+{{/extend}}
+             <td width="300">{{session.splashclick_time}}</td>
+             <td width="300">{{session.splashlogin_time}}</td>
+             <!--
+             <td width="300">base_grant_url = {{session.base_grant_url}}</td>
+             <td width="300">user_continue_url = {{session.user_continue_url}}</td>
+           -->
+           </tr>
+         <br>
+         {{/if}}
+         {{/each}}
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="footer">
+    <h3>POWERED BY</h3>
+    <img class="text-center" src="/img/cisco-meraki-gray.png" style="width:10%; margin:10px;">
+  </div>
+
+</div>
