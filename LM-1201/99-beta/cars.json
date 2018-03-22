@@ -1,0 +1,19 @@
+{
+    "Sports Cars":[
+        {
+            "make": "Porsche",
+            "model": "911",
+            "stock": 9
+        },
+        {
+            "make": "Dodge",
+            "model": "Viper",
+            "stock": 4
+        },
+        {
+            "make": "Chevy",
+            "model": "Corvette",
+            "stock": 1
+        }
+    ]
+}
