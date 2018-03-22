@@ -41,7 +41,7 @@ def fortune_cookie(number_of_lucky_numbers: int):
 
 
 if __name__ == '__main__':
-    print("Welcome to the  🥠  script!")
+    print("Get your fortune cookie!")
 
     how_many_lucky_numbers = 0
     while how_many_lucky_numbers < 1:

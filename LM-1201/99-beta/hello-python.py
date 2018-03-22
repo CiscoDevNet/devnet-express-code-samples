@@ -73,7 +73,7 @@ def main():
     See the `if _name_ == "main:"` conditional below.
 
     """
-    print("🐍  Welcome to Python!\n")
+    print("Welcome to Python!\n")
 
     # Display the location of the current Python interpreter
     print(
@@ -96,27 +96,27 @@ def main():
         end='',
     )
     if interpreter_is_good():
-        print("  😎  #Awesome\n")
+        print("#Awesome\n")
     else:
-        print("  ⚠️  For our labs you will need to use CPython 3.5+.\n")
+        print("==> For our labs you will need to use CPython 3.5+.\n")
 
     # Check to see if we are running in a virtual environment
     if IN_VIRTUAL_ENVIRONMENT:
-        print("I see that you have activated your virtual environment! ✅\n")
+        print("I see that you have activated your virtual environment!\n")
     else:
         print(
-            "It looks like you haven't activated your virtual environment.  ☹️"
+            "It looks like you haven't activated your virtual environment.️"
         )
         venv_created_answer = input("Did you create one?\n[y/n]")
         if venv_created_answer.strip().lower().startswith("y"):
-            print("\n⚠️  Activate your virtual environment by running:")
+            print("\n==> Activate your virtual environment by running:")
             if PLATFORM == "win32":
                 print("    <virtual-environment-name>\\Scripts\\activate.bat")
             else:
                 print("    source <virtual-environment-name>/bin/activate")
         else:
             print(
-                "\n⚠️  Follow the lab instructions to setup your virtual "
+                "\n==> Follow the lab instructions to setup your virtual "
                 "environment."
             )
         sys.exit()
