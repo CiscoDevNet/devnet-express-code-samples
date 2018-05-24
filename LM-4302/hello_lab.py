@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-# 24-May-2018 [AR]: Not changing function names because we're using
-# the myspark package
-from myspark import spark_get_room_id, spark_send_message
+from mywebexteams import webex_teams_get_room_id, webex_teams_send_message
 import requests
 
 # Disable all warning messages since we're dealing with a
@@ -86,27 +84,27 @@ room_id = None
 
 
 if not room_id:
-    room_id = spark_get_room_id(ACCESS_TOKEN, WEBEX_TEAMS_ROOM)
+    room_id = webex_teams_get_room_id(ACCESS_TOKEN, WEBEX_TEAMS_ROOM)
     print('Your room ID "{id}".'.format(id=room_id))
 
 if room_id:
-    spark_send_message(ACCESS_TOKEN, room_id,
+    webex_teams_send_message(ACCESS_TOKEN, room_id,
                        'Hello room! My script verified that I can '
-                       'post messages to Spark using REST API calls.')
+                       'post messages to Webex Teams using REST API calls.')
     if check_restconf(RESTCONF_URL):
-        spark_send_message(ACCESS_TOKEN, room_id,
+        webex_teams_send_message(ACCESS_TOKEN, room_id,
                            'It also verified that RESTCONF enabled device '
                            'is working properly.')
     else:
-        spark_send_message(ACCESS_TOKEN, room_id,
+        webex_teams_send_message(ACCESS_TOKEN, room_id,
                            'Unfortunately, RESTCONF enabled device is '
                            'NOT working properly.')
     if check_apic_em(APIC_EM_URL):
-        spark_send_message(ACCESS_TOKEN, room_id,
+        webex_teams_send_message(ACCESS_TOKEN, room_id,
                            'It also verified that APIC-EM '
                            'is working properly.')
     else:
-        spark_send_message(ACCESS_TOKEN, room_id,
+        webex_teams_send_message(ACCESS_TOKEN, room_id,
                            'Unfortunately, APIC-EM is '
                            'NOT working properly.')
     print('Please check room ' + WEBEX_TEAMS_ROOM +
