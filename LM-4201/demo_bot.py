@@ -61,6 +61,8 @@ args = parser.parse_args()
 
 if '@' in args.email:
   EMAIL=args.email
+  print("Email entered ", EMAIL)
+  print("Bearer", bearer)
 else:
   exit("Please provide an email address for webhook filtering.\n"\
     "Use '-h' to get help.")
@@ -129,7 +131,7 @@ def ngrok():
         return False
 
 
-def send_spark_get(url, payload=None, js=True):
+def send_webex_get(url, payload=None, js=True):
 
   if payload == None:
     request = requests.get(url, headers=headers)
@@ -140,7 +142,7 @@ def send_spark_get(url, payload=None, js=True):
   return request
 
 
-def send_spark_post(url, data, js=True):
+def send_webex_post(url, data, js=True):
 
   request = requests.post(url, json.dumps(data), headers=headers)
   if js:
@@ -148,7 +150,7 @@ def send_spark_post(url, data, js=True):
   return request
 
 
-def send_spark_delete(url, js=False):
+def send_webex_delete(url, js=False):
 
   request = requests.delete(url, headers=headers)
   if js != False:
@@ -156,7 +158,7 @@ def send_spark_delete(url, js=False):
   return request
 
 
-def send_spark_put(url, data, js=False):
+def send_webex_put(url, data, js=False):
 
   request = requests.put(url, data=json.dumps(data), headers=headers)
   if js:
@@ -227,18 +229,18 @@ def handle_text(text, filename=None):
 def get_files(file_urls, room_id):
 
   for file_url in file_urls:
-    response = send_spark_get(file_url, js=False)
+    response = send_webex_get(file_url, js=False)
     content_disp = response.headers.get('Content-Disposition', None)
     if content_disp is not None:
       filename = content_disp.split("filename=")[1].replace('"', '')
     if filename.endswith('.virl'):
       with open("./sims/" + filename, 'wb') as f:
         f.write(response.content)
-        send_spark_post(URL + "/messages",
+        send_webex_post(URL + "/messages",
                 {"roomId": room_id, "markdown": ' Received and saved - ' + filename})
         return filename
     else:
-      send_spark_post(URL + "/messages",
+      send_webex_post(URL + "/messages",
               {"roomId": room_id, "markdown": '**Sorry but I only accept VIRL files**'})
 
 
@@ -259,7 +261,7 @@ def webhook():
     if "https://" in urls['public_url']:
       target_url = urls['public_url']
 
-  check_webhook = send_spark_get(url, js=False)
+  check_webhook = send_webex_get(url, js=False)
   if check_webhook.ok:
     check_webhook = check_webhook.json()
     if len(check_webhook["items"]) > 0:
@@ -269,7 +271,7 @@ def webhook():
     for resource in resources:
       payload = {"name": name, "targetUrl": target_url,
              "resource": resource, "event": "created", "filter" : "personEmail="+EMAIL}
-      webhook = send_spark_post(url, payload, js=False)
+      webhook = send_webex_post(url, payload, js=False)
       if webhook.ok:
         status = True
         print("Webhook was successfully created")
@@ -281,12 +283,12 @@ def webhook():
     for webhook_id in webhooks:
       for item in webhooks[webhook_id]:
         if EMAIL in item:
-          send_spark_delete(url+"/"+webhook_id)
+          send_webex_delete(url+"/"+webhook_id)
           print("Webhook was removed")
     for resource in resources:
       payload = {"name": name, "targetUrl": target_url,
          "resource": resource, "event": "created", "filter" : "personEmail="+EMAIL}
-      webhook=send_spark_post(url, payload, js=False)
+      webhook=send_webex_post(url, payload, js=False)
       if webhook.ok:
         status = True
         print("Webhook was successfully created")
@@ -344,7 +346,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def spark_webhook():
+def webex_webhook():
   if request.method == 'POST':
     webhook = request.get_json(silent=True)
     resource = webhook['resource']
@@ -354,7 +356,7 @@ def spark_webhook():
     if senders_email != bot_email:
       pprint(webhook)
     if resource == "memberships" and senders_email == bot_email:
-      send_spark_post(URL + "/messages",
+      send_webex_post(URL + "/messages",
               {
                 "roomId": room_id,
                 "markdown": (greetings() +
@@ -368,10 +370,10 @@ def spark_webhook():
     if senders_email != bot_email:
       if "files" in webhook['data']:
         filename = get_files(webhook['data']['files'], room_id)
-      result = send_spark_get(
+      result = send_webex_get(
         URL + '/messages/{0}'.format(webhook['data']['id']))
       in_message = result.get('text', '')
-      print("Received " + in_message + " from spark. Processing...")
+      print("Received " + in_message + " from webex. Processing...")
       try:
         in_message = in_message.replace(bot_name.split(" ")[0] + " ", "")
       except:
@@ -381,25 +383,25 @@ def spark_webhook():
       else:
         msg = handle_text(in_message)
       if msg != None:
-        send_spark_post(URL + "/messages",
+        send_webex_post(URL + "/messages",
                 {"roomId": room_id, "markdown": msg})
     return "true"
   elif request.method == 'GET':
     message = "<center><img src=\"http://bit.ly/SparkBot-512x512\" alt=\"Spark Bot\" style=\"width:256; height:256;\"</center>" \
       "<center><h2><b>Congratulations! Your <i style=\"color:#ff8000;\">%s</i> bot is up and running.</b></h2></center>" \
-      "<center><b><i>Please don't forget to create Webhooks to start receiving events from Cisco Spark!</i></b></center>" % bot_name
+      "<center><b><i>Please don't forget to create Webhooks to start receiving events from Cisco Webex Teams!</i></b></center>" % bot_name
     return message
 
 
 def main():
   global bot_email, bot_name
   if len(bearer) != 0:
-    test_auth = send_spark_get(URL + "/people/me", js=False)
+    test_auth = send_webex_get(URL + "/people/me", js=False)
     if test_auth.status_code == 401:
       print("Looks like provided access token is not correct. \n"
           "Please review it and make sure it belongs to your bot account.\n"
           "Do not worry if you have lost the access token. "
-          "You can always go to https://developer.ciscospark.com/apps.html "
+          "You can always go to https://developer.webex.com/apps.html "
           "URL and generate a new access token.")
       sys.exit()
     if test_auth.status_code == 200:
@@ -410,15 +412,15 @@ def main():
     print("'bearer' variable is empty! \n"
         "Please populate it with bot's access token and run the script again.\n"
         "Do not worry if you have lost the access token. "
-        "You can always go to https://developer.ciscospark.com/apps.html "
+        "You can always go to https://developer.webex.com/apps.html "
         "URL and generate a new access token.")
     sys.exit()
 
-  if "@sparkbot.io" not in bot_email:
+  if ("@sparkbot.io" or "@webex.bot") not in bot_email:
     print("You have provided access token which does not belong to your bot.\n"
         "Please review it and make sure it belongs to your bot account.\n"
         "Do not worry if you have lost the access token. "
-        "You can always go to https://developer.ciscospark.com/apps.html "
+        "You can always go to https://developer.webex.com/apps.html "
         "URL and generate a new access token.")
     sys.exit()
   else:
