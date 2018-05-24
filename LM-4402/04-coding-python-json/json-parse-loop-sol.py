@@ -7,7 +7,7 @@ for auto in cars["sportsCars"]:
     print("Make is: " + auto["Make"] + "  Model is: "  + auto["Model"])
 
 
-spark_rooms={
+webex_teams_rooms={
     "items": [
         {
             "title": "My Cool Room!"
@@ -22,12 +22,12 @@ spark_rooms={
 }
 
 ### Write loop here to parse and print data
-for room in spark_rooms["items"]:
+for room in webex_teams_rooms["items"]:
     print("Room name is ",room["title"])
 
 
 
-spark_rooms={
+webex_teams_rooms={
     "items": [
         {
             "lastActivity": "2017-02-02T23:04:47.612Z",
@@ -45,13 +45,13 @@ spark_rooms={
 }
 
 ### Write loop here to parse and print data
-for room in spark_rooms["items"]:
+for room in webex_teams_rooms["items"]:
     print("Room name is ",room["title"]," last Activity is ",room["lastActivity"])
 
 
 
 
-spark_rooms={
+webex_teams_rooms={
     "items": [
         {
             "id": "Y2lzY29zcGFyazovLVzL1JPT00vNDQ2NTIxZTAtZTk5Yi0xMWU2LWFmNjktM2JjOGZhOWE1dr",
@@ -72,5 +72,5 @@ spark_rooms={
 }
 
 ### Write loop here to parse and print data
-for room in spark_rooms["items"]:
+for room in webex_teams_rooms["items"]:
     print("Room name is ",room["title"]," id is ",room["id"]," room locked is ",room["isLocked"])
