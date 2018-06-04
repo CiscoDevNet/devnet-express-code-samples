@@ -11,11 +11,11 @@ YOUR_MESSAGE 	= None #Replace None with the message that you will post to the ro
 #sets the header to be used for authentication and data format to be sent.
 def setHeaders():         
 	accessToken_hdr = 'Bearer ' + ACCESS_TOKEN
-	spark_header = {'Authorization': accessToken_hdr, 'Content-Type': 'application/json; charset=utf-8'}
-	return (spark_header)
+	webex_teams_header = {'Authorization': accessToken_hdr, 'Content-Type': 'application/json; charset=utf-8'}
+	return (webex_teams_header)
 
 
-#check if spark room already exists.  If so return the room id
+#check if webex teams room already exists.  If so return the room id
 def findRoom(the_header,room_name):
 	roomId=None
 	uri = 'https://api.ciscospark.com/v1/rooms'
@@ -63,10 +63,10 @@ def postMsg(the_header,roomId,message):
 #MISSION: WRITE CODE TO RETRIEVE AND DISPLAY DETAILS ABOUT THE ROOM.
 def getRoomInfo(the_header,roomId):
 	print("In function getRoomInfo")
-	#MISSION: Replace None in the uri variable with the Spark REST API call	
+	#MISSION: Replace None in the uri variable with the Webex Teams REST API call	
 	uri = None
 	if uri == None:
-		sys.exit("Please add the uri call to get room details.  See the Spark API Ref Guide")
+		sys.exit("Please add the uri call to get room details.  See the Webex Teams API Ref Guide")
 	resp = requests.get(uri, headers=the_header)
 	print("Room Info: ",resp.text)
 	resp = resp.json()
